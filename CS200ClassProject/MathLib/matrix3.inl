@@ -3,21 +3,18 @@
  *	Source file for matrix3
  *	CS200 Class Project
  */
-#include <matrix3.hpp>
-#include <angles.hpp>
-#include <vector2.hpp>
-#include <limits>
+#pragma once
 
 namespace Graphics
 {
 	template <typename T>
-	T matrix3<T>::operator()(int column, int row) const
+	constexpr T matrix3<T>::operator()(int column, int row) const
 	{
 		return elements(column, row);
 	}
 
 	template <typename T>
-	T& matrix3<T>::operator()(int column, int row)
+	constexpr T& matrix3<T>::operator()(int column, int row)
 	{
 		if (column < 0 || column >= 3)
 		{
@@ -31,7 +28,7 @@ namespace Graphics
 	}
 
 	template <typename T>
-	matrix3<T> operator*(const matrix3<T>& m1, const matrix3<T>& m2) noexcept
+	constexpr matrix3<T> operator*(const matrix3<T>& m1, const matrix3<T>& m2) noexcept
 	{
 		return matrix3(
 			m1(0, 0) * m2(0, 0) + m1(1, 0) * m2(0, 1) + m1(2, 0) * m2(0, 2),
@@ -46,13 +43,13 @@ namespace Graphics
 	}
 
 	template <typename T>
-	void operator*=(matrix3<T>& m1, const matrix3<T>& m2) noexcept
+	constexpr void operator*=(matrix3<T>& m1, const matrix3<T>& m2) noexcept
 	{
 		m1 = m1 * m2;
 	}
 
 	template <typename T>
-	vector3<T> operator*(const matrix3<T>& m, vector3<T> v) noexcept
+	constexpr vector3<T> operator*(const matrix3<T>& m, vector3<T> v) noexcept
 	{
 		return vector3<T>(
 			m(0, 0) * v.x + m(1, 0) * v.y + m(2, 0) * v.z,
@@ -61,7 +58,7 @@ namespace Graphics
 	}
 
 	template <typename T>
-	matrix3<T> MATRIX3::transpose(const matrix3<T>& m) noexcept
+	constexpr matrix3<T> MATRIX3::transpose(const matrix3<T>& m) noexcept
 	{
 		return matrix3<T>(
 			m(0, 0), m(1, 0), m(2, 0),
@@ -69,7 +66,7 @@ namespace Graphics
 			m(0, 2), m(1, 2), m(2, 2));
 	}
 
-	matrix3<float> MATRIX3::build_rotation(float angleInRadians) noexcept
+	constexpr matrix3<float> MATRIX3::build_rotation(float angleInRadians) noexcept
 	{
 		// Return specific matrix at specific parameter without calculation.
 		if (angleInRadians <= std::numeric_limits<float>::epsilon())
@@ -112,7 +109,7 @@ namespace Graphics
 	}
 
 	template <typename T>
-	matrix3<T> MATRIX3::build_identity() noexcept
+	constexpr matrix3<T> MATRIX3::build_identity() noexcept
 	{
 		return matrix3<T>(
 			1, 0, 0,
@@ -121,7 +118,7 @@ namespace Graphics
 	}
 
 	template <typename T>
-	matrix3<T> MATRIX3::build_scale(float scale_x, float scale_y) noexcept
+	constexpr matrix3<T> MATRIX3::build_scale(float scale_x, float scale_y) noexcept
 	{
 		return matrix3<T>(
 			scale_x, 0, 0,
@@ -130,19 +127,19 @@ namespace Graphics
 	}
 
 	template <typename T>
-	matrix3<T> MATRIX3::build_scale(float scale) noexcept
+	constexpr matrix3<T> MATRIX3::build_scale(float scale) noexcept
 	{
-		return MATRIX3::build_scale(scale, scale);
+		return MATRIX3::build_scale<float>(scale, scale);
 	}
 
 	template <typename T>
-	matrix3<T> MATRIX3::build_scale(const vector2<T>& scale) noexcept
+	constexpr matrix3<T> MATRIX3::build_scale(const vector2<T>& scale) noexcept
 	{
 		return MATRIX3::build_scale(scale.x, scale.y);
 	}
 
 	template <typename T>
-	matrix3<T> MATRIX3::build_translation(float translate_x, float translate_y) noexcept
+	constexpr matrix3<T> MATRIX3::build_translation(float translate_x, float translate_y) noexcept
 	{
 		return matrix3<T>(
 			1, 0, 0,
@@ -151,7 +148,7 @@ namespace Graphics
 	}
 
 	template <typename T>
-	matrix3<T> MATRIX3::build_translation(const vector2<T>& translation) noexcept
+	constexpr matrix3<T> MATRIX3::build_translation(const vector2<T>& translation) noexcept
 	{
 		return MATRIX3::build_translation(translation.x, translation.y);
 	}

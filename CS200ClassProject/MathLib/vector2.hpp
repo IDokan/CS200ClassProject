@@ -29,57 +29,61 @@ namespace Graphics
 			T elements[2];
 		};
 
-	vector2() noexcept = default;
-	explicit vector2(T repeatedFloat) noexcept : x(repeatedFloat), y(repeatedFloat) {};
-	vector2(T x, T y) noexcept : x(x), y(y) {};
+	constexpr vector2() noexcept = default;
+	constexpr explicit vector2(T repeatedFloat) noexcept : x(repeatedFloat), y(repeatedFloat) {};
+	constexpr vector2(T x, T y) noexcept : x(x), y(y) {};
 	};
 
 	template <typename T>
-	inline void operator+=(vector2<T>& v, const vector2<T>& addingVector) noexcept { v = v + addingVector; };
+	constexpr void operator+=(vector2<T>& v, const vector2<T>& addingVector) noexcept { v = v + addingVector; };
 	template <typename T>
-	inline void operator-=(vector2<T>& v, const vector2<T>& subtractingVector) noexcept { v = v - subtractingVector; };
+	constexpr void operator-=(vector2<T>& v, const vector2<T>& subtractingVector) noexcept { v = v - subtractingVector; };
 	template <typename T>
-	inline void operator*=(vector2<T>& v, float scale) noexcept { v = v * scale; };
+	constexpr void operator*=(vector2<T>& v, float scale) noexcept { v = v * scale; };
 	template <typename T>
-	inline void operator/=(vector2<T>& v, float divisor) noexcept { v = v / divisor; };
+	constexpr void operator/=(vector2<T>& v, float divisor) noexcept { v = v / divisor; };
 
 	template <typename T>
-	inline vector2<T> operator-(const vector2<T>& v) noexcept;
+	constexpr vector2<T> operator-(const vector2<T>& v) noexcept;
 
 	template <typename T>
-	vector2<T> operator+(const vector2<T>& lhs, const vector2<T>& rhs) noexcept;
+	constexpr vector2<T> operator+(const vector2<T>& lhs, const vector2<T>& rhs) noexcept;
 	template <typename T>
-	vector2<T> operator-(const vector2<T>& lhs, const vector2<T>& rhs) noexcept;
+	constexpr vector2<T> operator-(const vector2<T>& lhs, const vector2<T>& rhs) noexcept;
 	template <typename T>
-	vector2<T> operator*(const vector2<T>& lhs, float scale) noexcept;
+	constexpr vector2<T> operator*(const vector2<T>& lhs, float scale) noexcept;
 	template <typename T>
-	inline vector2<T> operator*(float scale, const vector2<T>& rhs) noexcept { return rhs * scale; };
+	constexpr  vector2<T> operator*(float scale, const vector2<T>& rhs) noexcept { return rhs * scale; };
 	template <typename T>
-	vector2<T> operator/(const vector2<T>& v, float divisor);
+	constexpr vector2<T> operator/(const vector2<T>& v, float divisor);
 
 	template<typename T>
-	[[nodiscard]] bool operator==(const vector2<T>& lhs, const vector2<T>& rhs) noexcept;
+	constexpr bool operator==(const vector2<T>& lhs, const vector2<T>& rhs) noexcept;
 	template<typename T>
-	[[nodiscard]] inline bool operator!=(const vector2<T>& lhs, const vector2<T>& rhs) noexcept { return !(lhs == rhs); };
+	constexpr bool operator!=(const vector2<T>& lhs, const vector2<T>& rhs) noexcept { return !(lhs == rhs); };
 
 	template<typename T>
-	[[nodiscard]] T dot(vector2<T> lhs, vector2<T> rhs) noexcept;
+	constexpr T dot(vector2<T> lhs, vector2<T> rhs) noexcept;
 	template<typename T>
-	vector2<T> perpendicularTo(vector2<T> vector) noexcept;
+	constexpr vector2<T> perpendicularTo(vector2<T> vector) noexcept;
 	template<typename T>
-	[[nodiscard]] T magnitudeSquared(vector2<T> vector) noexcept;
+	constexpr T magnitudeSquared(vector2<T> vector) noexcept;
 	template<typename T>
-	[[nodiscard]] float magnitude(vector2<T> vector) noexcept;
+	constexpr float magnitude(vector2<T> vector) noexcept;
 	template<typename T>
-	vector2<T> normalize(vector2<T> vector) noexcept;
+	constexpr vector2<T> normalize(vector2<T> vector) noexcept;
 	template<typename T>
-	[[nodiscard]] T distanceBetweenSquared(vector2<T> lhs, vector2<T> rhs) noexcept;
+	constexpr T distanceBetweenSquared(vector2<T> lhs, vector2<T> rhs) noexcept;
 	template<typename T>
-	[[nodiscard]] float distanceBetween(vector2<T> lhs, vector2<T> rhs) noexcept;
+	constexpr float distanceBetween(vector2<T> lhs, vector2<T> rhs) noexcept;
 	template<typename T>
-	[[nodiscard]] float angleBetween(vector2<T> lhs, vector2<T> rhs);
+	constexpr float angleBetween(vector2<T> lhs, vector2<T> rhs);
 	template<typename T>
-	vector2<T> rotateBy(float angleInRadians, vector2<T> vector2) noexcept;
+	constexpr vector2<T> rotateBy(float angleInRadians, vector2<T> vector2) noexcept;
 }
 
 #pragma warning(pop)
+
+#include <cmath>		// for std::abs(), std::cos(), std::sin(), std::sqrt(), std::acos()
+#include <limits>			// for std::numeric_limits<float>::epsilon()
+#include <vector2.inl>
