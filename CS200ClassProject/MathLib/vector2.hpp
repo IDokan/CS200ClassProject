@@ -10,7 +10,7 @@
 namespace Graphics
 {
 	template <typename T>
-	struct [[nodiscard]] vector2
+	struct vector2
 	{
 		union
 		{

@@ -19,16 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="PlatformWindow.cpp" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Window\Application.cpp" />
+    <ClCompile Include="Window\Engine.cpp" />
+    <ClCompile Include="Window\PlatformWindow.cpp" />
+    <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.hpp" />
-    <ClInclude Include="Engine.hpp" />
-    <ClInclude Include="PlatformWindow.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="Catch2\catch.hpp" />
+    <ClInclude Include="Window\Application.hpp" />
+    <ClInclude Include="Window\Engine.hpp" />
+    <ClInclude Include="Window\PlatformWindow.h" />
+    <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -52,7 +53,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>

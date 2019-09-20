@@ -13,33 +13,42 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{11454ea1-758f-49c1-8082-2bf6e713ad2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Catch2">
+      <UniqueIdentifier>{cbe4caed-8f86-43da-b389-a9a1f68c1434}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Window\Application.cpp">
+      <Filter>Window</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Window\Engine.cpp">
+      <Filter>Window</Filter>
     </ClCompile>
-    <ClCompile Include="PlatformWindow.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Window\PlatformWindow.cpp">
+      <Filter>Window</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Window\Window.cpp">
+      <Filter>Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Window\Application.hpp">
+      <Filter>Window</Filter>
     </ClInclude>
-    <ClInclude Include="Application.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Window\Engine.hpp">
+      <Filter>Window</Filter>
     </ClInclude>
-    <ClInclude Include="PlatformWindow.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Window\PlatformWindow.h">
+      <Filter>Window</Filter>
     </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Window\Window.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Catch2\catch.hpp">
+      <Filter>Catch2</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
