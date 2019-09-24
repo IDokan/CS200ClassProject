@@ -8,6 +8,7 @@ Application* Application::GetApplication()
 
 void Application::Init()
 {
+	//dsaf
 }
 
 void Application::Update()
