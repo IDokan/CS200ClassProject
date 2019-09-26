@@ -1,6 +1,6 @@
-#include <Engine.hpp>
+#include <Window/Engine.hpp>
 
-int main()
+int main(int argc, char* argv[])
 {
 	Engine engine;
 
@@ -10,8 +10,5 @@ int main()
 	{
 		engine.Update();
 	}
-
 	engine.Clear();
-
-	return 0;;
 }
