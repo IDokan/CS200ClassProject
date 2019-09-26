@@ -1,6 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
 #include "vector2.hpp"
 
 class PlatformWindow
@@ -13,12 +14,13 @@ public:
 	bool IsFullScreen() noexcept;
 	void TurnOnMonitorVerticaSynchronization(bool enable) noexcept;
 	bool IsMonitorVerticalSynchronizationOn() noexcept;
-	Graphics::vector2<float> GetPlatformWindowSize() const noexcept;
+	Graphics::vector2<int> GetPlatformWindowSize() const noexcept;
 
 	void ClearWindow() const noexcept;
 
 private:
-	//GLFWwindow* window;
+	GLFWwindow* window;
+	
 	int xPosition;
 	int yPosition;
 	int xSize = 1600;

@@ -8,13 +8,18 @@ Application* Application::GetApplication()
 
 void Application::Init()
 {
-	//dsaf
+	window.CreateWindow();
+	window.TurnOnMonitorVerticalSynchronization(true);
+	
 }
 
 void Application::Update()
 {
+	window.PollEvent();
+	window.SwapBackBuffer();
 }
 
 void Application::Clear()
 {
+	window.ClearWindow();
 }

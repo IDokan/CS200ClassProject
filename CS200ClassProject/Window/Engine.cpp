@@ -3,19 +3,22 @@
 
 void Engine::Init()
 {
+	isRunning = true;
 	app = Application::GetApplication();
 	app->Init();
 }
 
 void Engine::Update()
 {
-	while (isRunning)
-	{
-		app->Update();
-	}
+	app->Update();
 }
 
 void Engine::Clear()
 {
 	app->Clear();
+}
+
+bool Engine::IsRunning()
+{
+	return isRunning;
 }

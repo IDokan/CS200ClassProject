@@ -1,4 +1,5 @@
 #pragma once
+#include "Application.hpp"
 
 class Engine
 {
@@ -9,6 +10,8 @@ public:
 	void Update();
 	void Clear();
 
+	bool IsRunning();
+	
 private:
 	bool isRunning;
 	Application* app;

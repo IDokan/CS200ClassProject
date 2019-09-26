@@ -1,12 +1,15 @@
 #pragma once
 #include <memory>
-#include <vector2.hpp>
+#include "PlatformWindow.h"
+
+template<typename T>
+struct vector2;
 
 class PlatformWindow;
 class Window
 {
 public:
-	Window() noexcept = default;
+	Window() noexcept;
 	virtual ~Window() noexcept = default;
 
 	bool CreateWindow() noexcept;

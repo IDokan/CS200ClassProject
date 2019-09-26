@@ -1,4 +1,6 @@
 #pragma once
+#include "Window.h"
+
 class Application
 {
 public:
@@ -7,7 +9,7 @@ public:
 	void Update();
 	void Clear();
 private:
-	// Window
+	Window window;
 	Application() = default;
 };
 
