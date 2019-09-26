@@ -6,8 +6,8 @@ class PlatformWindow;
 class Window
 {
 public:
-	Window() noexcept;
-	virtual ~Window() noexcept;
+	Window() noexcept = default;
+	virtual ~Window() noexcept = default;
 
 	bool CreateWindow() noexcept;
 	void PollEvent() noexcept;
