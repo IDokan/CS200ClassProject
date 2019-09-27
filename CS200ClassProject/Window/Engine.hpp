@@ -1,5 +1,6 @@
 #pragma once
 #include "Application.hpp"
+#include "Timer/Timer.hpp"
 
 class Engine
 {
@@ -15,5 +16,7 @@ public:
 private:
 	bool isRunning;
 	Application* app;
+	Timer timer;
+	float dt;
 };
 

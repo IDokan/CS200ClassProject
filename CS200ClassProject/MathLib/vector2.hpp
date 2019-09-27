@@ -7,8 +7,6 @@
 #pragma warning(push)
 #pragma warning(disable : 4201)	// warning C4201 : nameless struct / union
 
-namespace Graphics
-{
 	template <typename T>
 	struct vector2
 	{
@@ -80,7 +78,6 @@ namespace Graphics
 	constexpr float angleBetween(vector2<T> lhs, vector2<T> rhs);
 	template<typename T>
 	constexpr vector2<T> rotateBy(float angleInRadians, vector2<T> vector2) noexcept;
-}
 
 #pragma warning(pop)
 

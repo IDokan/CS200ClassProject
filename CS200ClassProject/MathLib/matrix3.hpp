@@ -8,8 +8,6 @@
 #pragma warning(push)
 #pragma warning(disable : 4201)	// warning C4201 : nameless struct / union
 
-namespace Graphics
-{
 	template<typename T>
 	struct [[nodiscard]] matrix3
 	{
@@ -63,7 +61,6 @@ namespace Graphics
 		template<typename T>
 		constexpr matrix3<T> build_translation(const vector2<T>& translation) noexcept;
 	}
-}
 #pragma warning(pop)
 
 #include <angles.hpp>

@@ -91,7 +91,7 @@ bool PlatformWindow::IsMonitorVerticalSynchronizationOn() noexcept
 	return isVsyncOn;
 }
 
-Graphics::vector2<int> PlatformWindow::GetPlatformWindowSize() const noexcept
+vector2<int> PlatformWindow::GetPlatformWindowSize() const noexcept
 {
 	return windowSize;
 }

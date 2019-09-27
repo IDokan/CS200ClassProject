@@ -7,8 +7,6 @@
 #pragma warning(push)
 #pragma warning(disable : 4201)	// warning C4201 : nameless struct / union
 
-namespace Graphics
-{
 	template<typename T>
 	struct vector3
 	{
@@ -79,7 +77,6 @@ namespace Graphics
 	constexpr float distance_between(const vector3<T>& lhs, const vector3<T>& rhs) noexcept;
 	template<typename T>
 	constexpr float angle_between(const vector3<T>& lhs, const vector3<T>& rhs) noexcept;
-}
 
 #pragma warning(pop)
 

@@ -5,7 +5,7 @@
  */
 #pragma once
 
-namespace Graphics
+namespace MATH
 {
 	constexpr float PI = 3.1415926535897932384626433832795f;
 	constexpr float HALF_PI = PI / 2.0f;

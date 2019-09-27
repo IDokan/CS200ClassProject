@@ -5,12 +5,18 @@
  */
 #pragma once
 
-namespace Graphics
-{
 	template <typename T>
 	constexpr T matrix3<T>::operator()(int column, int row) const
 	{
-		return elements(column, row);
+		if (column < 0 || column >= 3)
+		{
+			throw "Column calls invalidation";
+		}
+		if (row < 0 || row >= 3)
+		{
+			throw "Row calls invalidation";
+		}
+		return elements[column][row];
 	}
 
 	template <typename T>
@@ -73,24 +79,24 @@ namespace Graphics
 		{
 			return build_identity<float>();
 		}
-		else if (angleInRadians <= HALF_PI + std::numeric_limits<float>::epsilon() &&
-			angleInRadians >= HALF_PI - std::numeric_limits<float>::epsilon())
+		else if (angleInRadians <= MATH::HALF_PI + std::numeric_limits<float>::epsilon() &&
+			angleInRadians >= MATH::HALF_PI - std::numeric_limits<float>::epsilon())
 		{
 			return matrix3<float>(
 				0, 1, 0,
 				-1, 0, 0,
 				0, 0, 1);
 		}
-		else if (angleInRadians <= PI + std::numeric_limits<float>::epsilon() &&
-			angleInRadians >= PI - std::numeric_limits<float>::epsilon())
+		else if (angleInRadians <= MATH::PI + std::numeric_limits<float>::epsilon() &&
+			angleInRadians >= MATH::PI - std::numeric_limits<float>::epsilon())
 		{
 			return matrix3<float>(
 				-1, 0, 0,
 				0, -1, 0,
 				0, 0, 1);
 		}
-		else if (angleInRadians <= PI + HALF_PI + std::numeric_limits<float>::epsilon() &&
-			angleInRadians >= PI + HALF_PI - std::numeric_limits<float>::epsilon())
+		else if (angleInRadians <= MATH::PI + MATH::HALF_PI + std::numeric_limits<float>::epsilon() &&
+			angleInRadians >= MATH::PI + MATH::HALF_PI - std::numeric_limits<float>::epsilon())
 		{
 			return matrix3<float>(
 				0, -1, 0,
@@ -135,7 +141,7 @@ namespace Graphics
 	template <typename T>
 	constexpr matrix3<T> MATRIX3::build_scale(const vector2<T>& scale) noexcept
 	{
-		return MATRIX3::build_scale(scale.x, scale.y);
+		return MATRIX3::build_scale<T>(scale.x, scale.y);
 	}
 
 	template <typename T>
@@ -150,6 +156,5 @@ namespace Graphics
 	template <typename T>
 	constexpr matrix3<T> MATRIX3::build_translation(const vector2<T>& translation) noexcept
 	{
-		return MATRIX3::build_translation(translation.x, translation.y);
+		return MATRIX3::build_translation<T>(translation.x, translation.y);
 	}
-}

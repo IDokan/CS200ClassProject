@@ -6,9 +6,6 @@
 #pragma once
 
 
-namespace Graphics
-{
-
 	template <typename T>
 	constexpr vector3<T> operator-(const vector3<T>& v) noexcept
 	{
@@ -124,4 +121,3 @@ namespace Graphics
 
 		return std::acos(dot(lhs, rhs) / magnitudeOfLhs / magnitudeOfRhs);
 	}
-}

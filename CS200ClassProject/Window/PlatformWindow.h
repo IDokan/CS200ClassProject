@@ -14,7 +14,7 @@ public:
 	bool IsFullScreen() noexcept;
 	void TurnOnMonitorVerticaSynchronization(bool enable) noexcept;
 	bool IsMonitorVerticalSynchronizationOn() noexcept;
-	Graphics::vector2<int> GetPlatformWindowSize() const noexcept;
+	vector2<int> GetPlatformWindowSize() const noexcept;
 
 	void ClearWindow() const noexcept;
 
@@ -26,6 +26,6 @@ private:
 	int xSize = 1600;
 	int ySize = 900;
 	bool isVsyncOn;
-	Graphics::vector2<int> windowSize{ xSize, ySize };
+	vector2<int> windowSize{ xSize, ySize };
 };
 

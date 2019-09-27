@@ -5,8 +5,6 @@
  */
 #pragma once
 
-namespace Graphics
-{
 	template <typename T>
 	constexpr vector2<T> operator-(const vector2<T>& v) noexcept
 	{
@@ -110,13 +108,12 @@ namespace Graphics
 	}
 
 	template <typename T>
-	constexpr vector2<T> rotateBy(float angleInRadians, vector2<T> vector2) noexcept
+	constexpr vector2 <T> rotateBy(float angleInRadians, vector2<T> rhs) noexcept
 	{
 		const float cos = std::cos(angleInRadians);
 		const float sin = std::sin(angleInRadians);
-		return vector2(
-			cos*vector2.x - sin * vector2.y,
-			sin*vector2.x + cos * vector2.y
+		return vector2<T>(
+			cos*rhs.x - sin * rhs.y,
+			sin*rhs.x + cos * rhs.y
 		);
 	}
-}

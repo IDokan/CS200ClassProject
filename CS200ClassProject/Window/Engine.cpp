@@ -10,7 +10,15 @@ void Engine::Init()
 
 void Engine::Update()
 {
-	app->Update();
+	dt = static_cast<float>(timer.GetElapsedSeconds());
+	timer.Reset();
+	app->Update(dt);
+
+	if (input.IsKeyTriggered(GLFW_KEY_ESCAPE))
+	{
+		app->Clear();
+		isRunning = false;
+	}
 }
 
 void Engine::Clear()

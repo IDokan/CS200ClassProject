@@ -31,7 +31,7 @@ bool Window::IsFullscreen() noexcept
 	return platformWindow->IsFullScreen();
 }
 
-Graphics::vector2<int> Window::WindowSize() noexcept
+vector2<int> Window::WindowSize() noexcept
 {
 	return platformWindow->GetPlatformWindowSize();
 }

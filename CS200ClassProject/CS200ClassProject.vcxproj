@@ -19,6 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Graphics\OpenGL\Camera.cpp" />
+    <ClCompile Include="Graphics\OpenGL\CameraManager.cpp" />
+    <ClCompile Include="Graphics\OpenGL\CameraView.cpp" />
+    <ClCompile Include="Graphics\OpenGL\Colors.cpp" />
+    <ClCompile Include="Graphics\OpenGL\GL.cpp" />
+    <ClCompile Include="Graphics\OpenGL\glCheck.cpp" />
+    <ClCompile Include="Graphics\OpenGL\Image.cpp" />
+    <ClCompile Include="Graphics\OpenGL\Mesh.cpp" />
+    <ClCompile Include="Graphics\OpenGL\Shader.cpp" />
+    <ClCompile Include="Graphics\OpenGL\Texture.cpp" />
+    <ClCompile Include="Graphics\OpenGL\Transform.cpp" />
+    <ClCompile Include="Graphics\OpenGL\VertexLayoutDescription.cpp" />
+    <ClCompile Include="Graphics\OpenGL\Vertices.cpp" />
+    <ClCompile Include="Input\InputController.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Window\Application.cpp" />
     <ClCompile Include="Window\Engine.cpp" />
     <ClCompile Include="Window\PlatformWindow.cpp" />
@@ -26,10 +42,33 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Catch2\catch.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Camera.hpp" />
+    <ClInclude Include="Graphics\OpenGL\CameraManager.hpp" />
+    <ClInclude Include="Graphics\OpenGL\CameraView.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Color4f.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Color4ub.hpp" />
+    <ClInclude Include="Graphics\OpenGL\GL.hpp" />
+    <ClInclude Include="Graphics\OpenGL\glCheck.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Image.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Material.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Mesh.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Shader.hpp" />
+    <ClInclude Include="Graphics\OpenGL\StockShaders.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Texture.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Transform.hpp" />
+    <ClInclude Include="Graphics\OpenGL\VertexLayoutDescription.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Vertices.hpp" />
+    <ClInclude Include="Input\InputController.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Timer\Timer.hpp" />
     <ClInclude Include="Window\Application.hpp" />
     <ClInclude Include="Window\Engine.hpp" />
     <ClInclude Include="Window\PlatformWindow.h" />
     <ClInclude Include="Window\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Graphics\OpenGL\StockShaders.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -90,7 +129,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)external\glew\include;$(SolutionDir)external\glfw\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\stb\include;$(SolutionDir)external\glew\include;$(SolutionDir)external\glfw\include;$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)external\glew\lib\$(PlatformTarget);$(SolutionDir)external\glfw\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -127,6 +166,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)external\glfw\include;$(SolutionDir)external\glew\include;$(SolutionDir)MathLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
