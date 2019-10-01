@@ -79,6 +79,9 @@
     <ClCompile Include="Graphics\OpenGL\Vertices.cpp">
       <Filter>Graphics\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="Sketch.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window\Application.hpp">
@@ -149,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="Graphics\OpenGL\Vertices.hpp">
       <Filter>Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Sketch.hpp">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
