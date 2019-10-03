@@ -11,7 +11,7 @@ void Sketch::Init() noexcept
 
 	// Mesh Init
 	Graphics::Mesh mesh;
-	const Graphics::VertexLayoutDescription& meshData{ Graphics::SHADER::solid_color_vertex_layout() };
+	const Graphics::VertexLayoutDescription& solidLayout = { Graphics::SHADER::solid_color_vertex_layout() };
 	mesh.SetPointListType(Graphics::PointListPattern::TriangleFan);
 
 	// Ellipse mesh Init
@@ -21,7 +21,7 @@ void Sketch::Init() noexcept
 	{
 		mesh.AddPoint(vector2<float>{ cos(angle* float(i)) * 0.5f, sin(angle* float(i)) * 0.5f });
 	}
-	ellipse.InitializeWithMeshAndLayout(mesh, meshData);
+	ellipse.InitializeWithMeshAndLayout(mesh, solidLayout);
 
 	mesh.ClearPoints();
 
@@ -30,7 +30,7 @@ void Sketch::Init() noexcept
 	mesh.AddPoint(vector2{ -0.5f, 0.5f });
 	mesh.AddPoint(vector2{ 0.5f });
 	mesh.AddPoint(vector2{ 0.5f, -0.5f });
-	rectangle.InitializeWithMeshAndLayout(mesh, meshData);
+	rectangle.InitializeWithMeshAndLayout(mesh, solidLayout);
 }
 
 void Sketch::Update(float /*dt*/) noexcept
@@ -103,4 +103,48 @@ void Sketch::DrawRectangles(vector2<float> position, float width, float height) 
 void Sketch::DrawRectangles(float x, float y, float width, float height) noexcept
 {
 	DrawRectangles(vector2<float>(x, y), vector2<float>(width, height));
+}
+
+void Sketch::DrawTriangles(vector2<float> position1, vector2<float> position2, vector2<float> position3) noexcept
+{
+	Graphics::Mesh mesh;
+	mesh.AddPoint(position1);
+	mesh.AddPoint(position2);
+	mesh.AddPoint(position3);
+	mesh.SetPointListType(Graphics::PointListPattern::Triangles);
+
+	material.shader = &Graphics::SHADER::solid_color();
+	material.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform();
+
+	Graphics::Vertices triangle;
+	triangle.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::solid_color_vertex_layout());
+
+	Graphics::GL::draw(triangle, material);
+}
+
+void Sketch::DrawTriangles(float x1, float y1, float x2, float y2, float x3, float y3) noexcept
+{
+	DrawTriangles(vector2<float>(x1, y1), vector2<float>(x2, y2), vector2<float>(x3, y3));
+}
+
+void Sketch::DrawLines(vector2<float> position1, vector2<float> position2) noexcept
+{
+	Graphics::Mesh mesh;
+	mesh.AddPoint(position1);
+	mesh.AddPoint(position2);
+	mesh.SetPointListType(Graphics::PointListPattern::Lines);
+
+	material.shader = &Graphics::SHADER::solid_color();
+	material.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
+	material.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform();
+
+	Graphics::Vertices line;
+	line.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::solid_color_vertex_layout());
+	
+	Graphics::GL::draw(line, material);
+}
+
+void Sketch::DrawLines(float x1, float y1, float x2, float y2) noexcept
+{
+	DrawLines(vector2<float>(x1, y1), vector2<float>(x2, y2));
 }
