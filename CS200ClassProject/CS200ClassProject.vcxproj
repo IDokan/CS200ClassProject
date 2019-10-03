@@ -35,6 +35,7 @@
     <ClCompile Include="Input\InputController.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Level\BasicLevel.cpp" />
     <ClCompile Include="Sketch.cpp" />
     <ClCompile Include="Window\Application.cpp" />
     <ClCompile Include="Window\Engine.cpp" />
@@ -63,6 +64,7 @@
     <ClInclude Include="Input\InputController.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Level\BasicLevel.hpp" />
     <ClInclude Include="Timer\Timer.hpp" />
     <ClInclude Include="Window\Application.hpp" />
     <ClInclude Include="Window\Engine.hpp" />

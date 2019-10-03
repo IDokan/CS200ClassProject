@@ -23,6 +23,9 @@
     <Filter Include="Graphics\OpenGL">
       <UniqueIdentifier>{d1050631-4fa3-4e39-878b-34def4b311ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{c68f089d-459d-40c9-8e1f-6eddc97f1040}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Application.cpp">
@@ -82,6 +85,7 @@
     <ClCompile Include="Sketch.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Level\BasicLevel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window\Application.hpp">
@@ -155,6 +159,9 @@
     </ClInclude>
     <ClInclude Include="Graphics\Sketch.hpp">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Level\BasicLevel.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

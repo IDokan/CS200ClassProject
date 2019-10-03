@@ -12,16 +12,18 @@ void Application::Init()
 	window.CreateWindow();
 	window.TurnOnMonitorVerticalSynchronization(true);
 
+	level0.Init();
+	
 	input.Init();
 }
 
-void Application::Update(float /*dt*/)
+void Application::Update(float dt)
 {
 	input.TriggeredReset();
 	
 	window.PollEvent();
 
-	
+	level0.Update(dt);
 	
 	window.SwapBackBuffer();
 }
@@ -68,6 +70,7 @@ void Application::InputTest()
 
 void Application::Clear()
 {
+	level0.Clear();
 	window.ClearWindow();
 }
 

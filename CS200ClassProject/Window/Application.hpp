@@ -1,7 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "Input/InputController.h"
-#include "Graphics/Sketch.hpp"
+#include <Level/BasicLevel.hpp>
 
 	template<typename>
 	struct vector2;
@@ -22,6 +22,6 @@ private:
 	Window window;
 	Application() = default;
 
-	Sketch sketch;
+	BasicLevel level0;
 };
 
