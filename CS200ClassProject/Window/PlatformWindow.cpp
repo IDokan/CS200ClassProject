@@ -1,5 +1,31 @@
 #include "PlatformWindow.h"
 #include "vector2.hpp"
+#include <Input/InputController.h>
+#include <Graphics/OpenGL/GL.hpp>
+
+namespace
+{
+	void KeyCallback(GLFWwindow*, int key, int, int action, int)
+	{
+		input.SetKeyboardInput(key, action);
+	}
+	void MousePositionCallback(GLFWwindow*, double xPos, double yPos)
+	{
+		input.SetMousePos(static_cast<float>(xPos), static_cast<float>(yPos));
+	}
+	void MouseButtonCallback(GLFWwindow*, int button, int action, int)
+	{
+		input.SetMouseButtonInput(button, action);
+	}
+	void MouseWheelScroll(GLFWwindow*, double x_offset, double y_offset)
+	{
+		input.SetMouseWheel(x_offset, y_offset);
+	}
+	void WindowSizeCallback(GLFWwindow*, int width, int height)
+	{
+		Graphics::GL::set_display_area(width, height);
+	}
+}
 
 bool PlatformWindow::CreateWindow() noexcept
 {
@@ -28,12 +54,11 @@ bool PlatformWindow::CreateWindow() noexcept
 	}
 
 	glfwMakeContextCurrent(window);
-	// TODO: Make a callback functions and Uncomment it
-	//glfwSetKeyCallback(window, KeyCallback);
-	//glfwSetCursorPosCallback(window, MousePositionCallback);
-	//glfwSetMouseButtonCallback(window, MouseButtonCallback);
-	//glfwSetScrollCallback(window, MouseWheelScroll);
-	//glfwSetWindowSizeCallback(window, WindowSizeCallback);
+	glfwSetKeyCallback(window, KeyCallback);
+	glfwSetCursorPosCallback(window, MousePositionCallback);
+	glfwSetMouseButtonCallback(window, MouseButtonCallback);
+	glfwSetScrollCallback(window, MouseWheelScroll);
+	glfwSetWindowSizeCallback(window, WindowSizeCallback);
 	glfwSwapInterval(true);
 
 	glewInit();

@@ -48,6 +48,8 @@ namespace Graphics
 		void MoveUp(float dt, float distance) noexcept;
 		void MoveRight(float dt, float distance) noexcept;
 
+		// All Camera Moving is implemented in here.
+		// You can call it with how much you want to zoom when mouse scroll up and down.
 		void CameraMove(const float& zoomSize) noexcept;
 
 	private:

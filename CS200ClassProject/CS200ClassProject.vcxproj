@@ -32,11 +32,11 @@
     <ClCompile Include="Graphics\OpenGL\Transform.cpp" />
     <ClCompile Include="Graphics\OpenGL\VertexLayoutDescription.cpp" />
     <ClCompile Include="Graphics\OpenGL\Vertices.cpp" />
+    <ClCompile Include="Graphics\Sketch.cpp" />
     <ClCompile Include="Input\InputController.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Level\BasicLevel.cpp" />
-    <ClCompile Include="Sketch.cpp" />
     <ClCompile Include="Window\Application.cpp" />
     <ClCompile Include="Window\Engine.cpp" />
     <ClCompile Include="Window\PlatformWindow.cpp" />

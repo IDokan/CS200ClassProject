@@ -82,10 +82,10 @@
     <ClCompile Include="Graphics\OpenGL\Vertices.cpp">
       <Filter>Graphics\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="Sketch.cpp">
+    <ClCompile Include="Level\BasicLevel.cpp" />
+    <ClCompile Include="Graphics\Sketch.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Level\BasicLevel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window\Application.hpp">

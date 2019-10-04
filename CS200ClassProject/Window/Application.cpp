@@ -22,6 +22,7 @@ void Application::Update(float dt)
 	input.TriggeredReset();
 	
 	window.PollEvent();
+	InputTest();
 
 	level0.Update(dt);
 	
