@@ -3,6 +3,13 @@
 #include "Graphics/OpenGL/Material.hpp"
 #include "Graphics/OpenGL/Vertices.hpp"
 #include "Graphics/OpenGL/CameraManager.hpp"
+#include "Graphics/OpenGL/Texture.hpp"
+
+namespace std {
+	namespace filesystem {
+		class path;
+	}
+}
 
 class Sketch
 {
@@ -32,6 +39,9 @@ public:
 	void DrawLines(vector2<float> position1, vector2<float> position2) noexcept;
 	void DrawLines(float x1, float y1, float x2, float y2) noexcept;
 
+	// Draw Texture function
+	void DrawTexture(vector2<float> position, vector2<float> size, const std::filesystem::path& filepath) noexcept;
+
 	void PushMatrix(const matrix3<float>& matrix) noexcept;
 	void PopMatrix() noexcept;
 private:
@@ -39,6 +49,8 @@ private:
 	
 	void Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices, const matrix3<float>& modelToWorld) noexcept;
 	void Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices) noexcept;
+
+	void SetImage(const std::filesystem::path& filepath) noexcept;
 
 private:
 	std::stack<matrix3<float>> hierarchical{};
@@ -51,5 +63,9 @@ private:
 	Graphics::Vertices quad;
 	Graphics::Vertices triangle;
 	Graphics::Vertices line;
+
+	Graphics::Texture texture;
+	Graphics::Vertices sprite;
+	Graphics::material textureMaterial;
 };
 

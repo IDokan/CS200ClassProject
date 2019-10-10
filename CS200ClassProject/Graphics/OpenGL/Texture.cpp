@@ -34,7 +34,6 @@ namespace Graphics
     {
 		bool returnValue;
 		Image image;
-		//if (imageStorage.find(file_path.string()) == imageStorage.end())
 		{
 			if (image.LoadFromPNG(file_path) == false)
 			{
@@ -45,14 +44,6 @@ namespace Graphics
 
 			imageStorage.insert_or_assign(file_path.string(), transTexture{textureHandle, width, height});
 		}
-		//else
-		//{
-		//	transTexture loadedTexture = imageStorage.at(file_path.string());
-		//	textureHandle = loadedTexture.t;
-		//	width = loadedTexture.w;
-		//	height = loadedTexture.h;
-		//	returnValue = true;
-		//}
 
         return returnValue;
     }

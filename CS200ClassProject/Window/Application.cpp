@@ -39,10 +39,6 @@ void Application::InputTest()
 	{
 		std::cout << "B" << std::endl;
 	}
-	if (input.IsKeyReleased(GLFW_KEY_B))
-	{
-		std::cout << "B" << std::endl;
-	}
 	if (input.IsMouseButtonTriggered(GLFW_MOUSE_BUTTON_LEFT))
 	{
 		std::cout << "left mouse button triggered" << std::endl;

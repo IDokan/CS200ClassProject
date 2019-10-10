@@ -2,6 +2,7 @@
 #include <Graphics/OpenGL/GL.hpp>
 #include "Graphics/OpenGL/Mesh.hpp"
 #include "Graphics/OpenGL/StockShaders.hpp"
+#include <iostream>
 
 
 void Sketch::Init() noexcept
@@ -31,6 +32,13 @@ void Sketch::Init() noexcept
 	mesh.AddPoint(vector2{ 0.5f });
 	mesh.AddPoint(vector2{ 0.5f, -0.5f });
 	rectangle.InitializeWithMeshAndLayout(mesh, solidLayout);
+
+
+	mesh.AddTextureCoordinate(vector2{ 0.f, 1.f });
+	mesh.AddTextureCoordinate(vector2{ 1.f });
+	mesh.AddTextureCoordinate(vector2{ 1.f, 0.f });
+	mesh.AddTextureCoordinate(vector2{ 0.f });
+	sprite.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::textured_vertex_layout());
 }
 
 void Sketch::Update(float /*dt*/) noexcept
@@ -149,6 +157,18 @@ void Sketch::DrawLines(float x1, float y1, float x2, float y2) noexcept
 	DrawLines(vector2<float>(x1, y1), vector2<float>(x2, y2));
 }
 
+void Sketch::DrawTexture(vector2<float> position, vector2<float> size, const std::filesystem::path& filepath) noexcept
+{
+	SetImage(filepath);
+	const matrix3<float> modelToWorld = MATRIX3::build_translation(position) * MATRIX3::build_scale(size);
+
+	Draw(&Graphics::SHADER::textured(), sprite);
+	textureMaterial.shader = &Graphics::SHADER::textured();
+	textureMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
+	textureMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * modelToWorld;
+	Graphics::GL::draw(sprite, textureMaterial);
+}
+
 void Sketch::PushMatrix(const matrix3<float>& matrix) noexcept
 {
 	hierarchical.push(matrix);
@@ -163,12 +183,13 @@ matrix3<float> Sketch::CalculateHierarchical() noexcept
 {
 	matrix3 result = MATRIX3::build_identity < float >();
 
+	std::stack<matrix3<float>> tmpStack = hierarchical;
 	while (!hierarchical.empty())
 	{
 		result *= hierarchical.top();
 		hierarchical.pop();
 	}
-	hierarchical.push(result);
+	hierarchical = tmpStack;
 	return result;
 }
 
@@ -177,11 +198,25 @@ void Sketch::Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices,
 {
 	material.shader = shader;
 	material.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
-	material.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * modelToWorld * CalculateHierarchical();
+	material.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * modelToWorld ;
 	Graphics::GL::draw(vertices, material);
 }
 
 void Sketch::Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices) noexcept
 {
 	Draw(shader, vertices, MATRIX3::build_identity<float>());
+}
+
+void Sketch::SetImage(const std::filesystem::path& filepath) noexcept
+{
+	if (texture.LoadFromPNG(filepath))
+	{
+		const Graphics::texture_uniform container{ &texture, 0 };
+		textureMaterial.textureUniforms[Graphics::SHADER::Uniform_Texture] = container;
+		textureMaterial.vector2Uniforms[Graphics::SHADER::Uniform_ImageSize] = vector2{ float(texture.GetWidth()), float(texture.GetHeight()) };
+	}
+	else
+	{
+		std::cout << "fail to load image\n";
+	}
 }
