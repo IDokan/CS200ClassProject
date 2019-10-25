@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Graphics\OpenGL\BitmapFont.cpp" />
     <ClCompile Include="Graphics\OpenGL\Camera.cpp" />
     <ClCompile Include="Graphics\OpenGL\CameraManager.cpp" />
     <ClCompile Include="Graphics\OpenGL\CameraView.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="Graphics\OpenGL\Image.cpp" />
     <ClCompile Include="Graphics\OpenGL\Mesh.cpp" />
     <ClCompile Include="Graphics\OpenGL\Shader.cpp" />
+    <ClCompile Include="Graphics\OpenGL\Text.cpp" />
     <ClCompile Include="Graphics\OpenGL\Texture.cpp" />
     <ClCompile Include="Graphics\OpenGL\Transform.cpp" />
     <ClCompile Include="Graphics\OpenGL\VertexLayoutDescription.cpp" />
@@ -44,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Catch2\catch.hpp" />
+    <ClInclude Include="Graphics\OpenGL\BitmapFont.hpp" />
     <ClInclude Include="Graphics\OpenGL\Camera.hpp" />
     <ClInclude Include="Graphics\OpenGL\CameraManager.hpp" />
     <ClInclude Include="Graphics\OpenGL\CameraView.hpp" />
@@ -56,6 +59,7 @@
     <ClInclude Include="Graphics\OpenGL\Mesh.hpp" />
     <ClInclude Include="Graphics\OpenGL\Shader.hpp" />
     <ClInclude Include="Graphics\OpenGL\StockShaders.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Text.hpp" />
     <ClInclude Include="Graphics\OpenGL\Texture.hpp" />
     <ClInclude Include="Graphics\OpenGL\Transform.hpp" />
     <ClInclude Include="Graphics\OpenGL\VertexLayoutDescription.hpp" />

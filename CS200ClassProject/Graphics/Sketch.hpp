@@ -4,6 +4,8 @@
 #include "Graphics/OpenGL/Vertices.hpp"
 #include "Graphics/OpenGL/CameraManager.hpp"
 #include "Graphics/OpenGL/Texture.hpp"
+#include "Graphics/OpenGL/BitmapFont.hpp"
+#include "Graphics/OpenGL/Text.hpp"
 
 namespace std {
 	namespace filesystem {
@@ -67,5 +69,9 @@ private:
 	Graphics::Texture texture;
 	Graphics::Vertices sprite;
 	Graphics::material textureMaterial;
+
+	Graphics::BitmapFont font;
+	Graphics::Text text;
+	Graphics::material textMaterial;
 };
 

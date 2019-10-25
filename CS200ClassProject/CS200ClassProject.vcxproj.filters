@@ -86,6 +86,12 @@
     <ClCompile Include="Graphics\Sketch.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\OpenGL\BitmapFont.cpp">
+      <Filter>Graphics\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\OpenGL\Text.cpp">
+      <Filter>Graphics\OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window\Application.hpp">
@@ -162,6 +168,12 @@
     </ClInclude>
     <ClInclude Include="Level\BasicLevel.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\OpenGL\BitmapFont.hpp">
+      <Filter>Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\OpenGL\Text.hpp">
+      <Filter>Graphics\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

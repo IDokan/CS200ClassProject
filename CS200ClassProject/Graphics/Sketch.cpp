@@ -33,12 +33,22 @@ void Sketch::Init() noexcept
 	mesh.AddPoint(vector2{ 0.5f, -0.5f });
 	rectangle.InitializeWithMeshAndLayout(mesh, solidLayout);
 
-
+	// Texture Init
 	mesh.AddTextureCoordinate(vector2{ 0.f, 1.f });
 	mesh.AddTextureCoordinate(vector2{ 1.f });
 	mesh.AddTextureCoordinate(vector2{ 1.f, 0.f });
 	mesh.AddTextureCoordinate(vector2{ 0.f });
 	sprite.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::textured_vertex_layout());
+
+	// Font & Text Init
+	if (!font.LoadFromFile("../assets/fonts/Malgungothic/malgungothic.fnt"))
+	{
+		std::cerr << "Falied to load file!" << std::endl;
+		// return false;
+	}
+	text.SetFont(font);
+	textMaterial.shader = &Graphics::SHADER::textured();
+	//textMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = 
 }
 
 void Sketch::Update(float /*dt*/) noexcept
