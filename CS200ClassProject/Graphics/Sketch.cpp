@@ -2,6 +2,7 @@
 #include <Graphics/OpenGL/GL.hpp>
 #include "Graphics/OpenGL/Mesh.hpp"
 #include "Graphics/OpenGL/StockShaders.hpp"
+#include "Graphics/OpenGL/Color4f.hpp"
 #include <iostream>
 
 
@@ -41,14 +42,15 @@ void Sketch::Init() noexcept
 	sprite.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::textured_vertex_layout());
 
 	// Font & Text Init
-	if (!font.LoadFromFile("../assets/fonts/Malgungothic/malgungothic.fnt"))
+	if (!font.LoadFromFile("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/fonts/Malgungothic/malgungothic.fnt"))
 	{
 		std::cerr << "Falied to load file!" << std::endl;
 		// return false;
 	}
 	text.SetFont(font);
 	textMaterial.shader = &Graphics::SHADER::textured();
-	//textMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = 
+	textMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
+	textMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -0.9f;
 }
 
 void Sketch::Update(float /*dt*/) noexcept
@@ -187,6 +189,19 @@ void Sketch::PushMatrix(const matrix3<float>& matrix) noexcept
 void Sketch::PopMatrix() noexcept
 {
 	hierarchical.pop();
+}
+
+void Sketch::DrawText(vector2<float> position, vector2<float> scale, std::wstring textWritten)
+{
+	text.SetString(textWritten);
+
+	for (const auto& verticesTexturePair : text.GetVerticesWithMatchingTextures())
+	{
+		const Graphics::Vertices& textVertices = *verticesTexturePair.first;
+		const Graphics::Texture* textTexture = verticesTexturePair.second;
+		textMaterial.textureUniforms.insert_or_assign(Graphics::SHADER::Uniform_Texture, Graphics::texture_uniform{ textTexture });
+		Draw(&Graphics::SHADER::textured(), textVertices, MATRIX3::build_translation(position) * MATRIX3::build_scale(scale));
+	}
 }
 
 matrix3<float> Sketch::CalculateHierarchical() noexcept

@@ -46,6 +46,8 @@ public:
 
 	void PushMatrix(const matrix3<float>& matrix) noexcept;
 	void PopMatrix() noexcept;
+
+	void DrawText(vector2<float> position, vector2<float> scale, std::wstring text);
 private:
 	[[nodiscard]] matrix3<float> CalculateHierarchical() noexcept;
 	

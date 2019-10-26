@@ -8,12 +8,16 @@
 #include <Graphics/OpenGL/Vertices.hpp>
 #include <string>
 #include <unordered_map>
+#include "Graphics/OpenGL/CameraView.hpp"
+#include "Graphics/OpenGL/Transform.hpp"
+#include "Graphics/OpenGL/BitmapFont.hpp"
+
+class CameraView;
+class Transform;
 
 namespace Graphics
 {
-    class CameraView;
-    class Transform;
-    class BitmapFont;
+	class BitmapFont;
 
     class [[nodiscard]] Text
     {

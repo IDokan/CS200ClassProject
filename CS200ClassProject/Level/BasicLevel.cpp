@@ -14,7 +14,7 @@ void BasicLevel::Update(float dt)
 	sketch.DrawEllipses(vector2<float>(0.f), vector2<float>(100.f, 200.f));
 	// C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/texture/rect.png
 	// C:/Users/KMU_USER/Desktop/GAM200Engine/texture/testSpriteSheet.png
-	sketch.DrawTexture(vector2<float>(-100.f), vector2<float>(100.f), "C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/texture/rect.png");
+	sketch.DrawTexture(vector2<float>(-100.f), vector2<float>(100.f), "C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/texture/rect.png");
 	sketch.PushMatrix(MATRIX3::build_translation(vector2<float>(1250.f)));
 	{
 		sketch.DrawRectangles(vector2<float>(100.f), vector2<float>(50.f));
@@ -27,6 +27,7 @@ void BasicLevel::Update(float dt)
 		}
 		sketch.PopMatrix();
 	}
+	//sketch.DrawText(vector2<float>(10.f), vector2<float>(-500.f), L"ABCDEF");
 	sketch.PopMatrix();
 	sketch.FinishDrawing();
 }
