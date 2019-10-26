@@ -200,7 +200,8 @@ void Sketch::DrawText(vector2<float> position, vector2<float> scale, std::wstrin
 		const Graphics::Vertices& textVertices = *verticesTexturePair.first;
 		const Graphics::Texture* textTexture = verticesTexturePair.second;
 		textMaterial.textureUniforms.insert_or_assign(Graphics::SHADER::Uniform_Texture, Graphics::texture_uniform{ textTexture });
-		Draw(&Graphics::SHADER::textured(), textVertices, MATRIX3::build_translation(position) * MATRIX3::build_scale(scale));
+		textMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_scale(scale) * MATRIX3::build_translation(position);
+		Graphics::GL::draw(textVertices, textMaterial);
 	}
 }
 
