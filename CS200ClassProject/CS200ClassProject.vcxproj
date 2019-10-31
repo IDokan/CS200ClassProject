@@ -28,6 +28,7 @@
     <ClCompile Include="Graphics\OpenGL\glCheck.cpp" />
     <ClCompile Include="Graphics\OpenGL\Image.cpp" />
     <ClCompile Include="Graphics\OpenGL\Mesh.cpp" />
+    <ClCompile Include="Graphics\OpenGL\Screenshot.cpp" />
     <ClCompile Include="Graphics\OpenGL\Shader.cpp" />
     <ClCompile Include="Graphics\OpenGL\Text.cpp" />
     <ClCompile Include="Graphics\OpenGL\Texture.cpp" />
@@ -57,6 +58,7 @@
     <ClInclude Include="Graphics\OpenGL\Image.hpp" />
     <ClInclude Include="Graphics\OpenGL\Material.hpp" />
     <ClInclude Include="Graphics\OpenGL\Mesh.hpp" />
+    <ClInclude Include="Graphics\OpenGL\Screenshot.hpp" />
     <ClInclude Include="Graphics\OpenGL\Shader.hpp" />
     <ClInclude Include="Graphics\OpenGL\StockShaders.hpp" />
     <ClInclude Include="Graphics\OpenGL\Text.hpp" />

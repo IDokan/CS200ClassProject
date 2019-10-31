@@ -16,6 +16,7 @@ namespace std {
 class Sketch
 {
 public:
+	Sketch() {}
 	void Init() noexcept;
 	void Update(float dt) noexcept;
 	void Clear() noexcept;

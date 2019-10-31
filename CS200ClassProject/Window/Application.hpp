@@ -18,9 +18,9 @@ public:
 	
 private:
 	void InputTest();
-	
+	Application() {};
+
 	Window window;
-	Application() = default;
 
 	BasicLevel level0;
 };

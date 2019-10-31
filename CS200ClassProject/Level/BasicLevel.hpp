@@ -4,6 +4,7 @@
 class BasicLevel
 {
 public:
+	BasicLevel() {};
 	void Init();
 	void Update(float dt);
 	void Clear();

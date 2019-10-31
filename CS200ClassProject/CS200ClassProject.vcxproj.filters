@@ -92,6 +92,9 @@
     <ClCompile Include="Graphics\OpenGL\Text.cpp">
       <Filter>Graphics\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\OpenGL\Screenshot.cpp">
+      <Filter>Graphics\OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window\Application.hpp">
@@ -173,6 +176,9 @@
       <Filter>Graphics\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\OpenGL\Text.hpp">
+      <Filter>Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\OpenGL\Screenshot.hpp">
       <Filter>Graphics\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>

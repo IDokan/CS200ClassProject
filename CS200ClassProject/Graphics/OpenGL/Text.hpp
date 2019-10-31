@@ -22,7 +22,7 @@ namespace Graphics
     class [[nodiscard]] Text
     {
     public:
-        Text() noexcept = default;
+        Text() noexcept {};
         Text(std::wstring text_string, const BitmapFont& text_font) noexcept;
 
         std::vector<std::pair<const Vertices*, const Texture*>> GetVerticesWithMatchingTextures() const noexcept;

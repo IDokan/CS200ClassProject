@@ -2,6 +2,8 @@
 #include "vector2.hpp"
 #include <Input/InputController.h>
 #include <Graphics/OpenGL/GL.hpp>
+#include <stb_image.h>
+#include <Graphics/OpenGL/Image.hpp>
 
 namespace
 {
@@ -21,9 +23,10 @@ namespace
 	{
 		input.SetMouseWheel(x_offset, y_offset);
 	}
-	void WindowSizeCallback(GLFWwindow*, int width, int height)
+	void WindowSizeCallback(GLFWwindow*, int /*width*/, int /*height*/)
 	{
-		Graphics::GL::set_display_area(width, height);
+		Graphics::GL::set_display_area(800, 600);
+		
 	}
 }
 
@@ -61,6 +64,10 @@ bool PlatformWindow::CreateWindow() noexcept
 	glfwSetWindowSizeCallback(window, WindowSizeCallback);
 	glfwSwapInterval(true);
 
+	GLFWimage icon[1];
+	icon[0].pixels = stbi_load("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/texture/engineCustomIcon.png", &icon[0].width, &icon[0].height, 0, 4);
+	
+	glfwSetWindowIcon(window, 1, &icon[0]);
 	glewInit();
 
 	return true;
@@ -119,6 +126,11 @@ bool PlatformWindow::IsMonitorVerticalSynchronizationOn() noexcept
 vector2<int> PlatformWindow::GetPlatformWindowSize() const noexcept
 {
 	return windowSize;
+}
+
+void PlatformWindow::SetWindowTitle(const std::string& title) noexcept
+{
+	glfwSetWindowTitle(window, title.c_str());
 }
 
 void PlatformWindow::ClearWindow() const noexcept

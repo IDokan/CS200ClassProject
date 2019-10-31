@@ -21,6 +21,7 @@ public:
 	bool IsMonitorVerticalSynchronizationOn() noexcept;
 	void TurnOnMonitorVerticalSynchronization(bool enable) noexcept;
 	void ClearWindow() const noexcept;
+	void SetWindowTitle(const std::string& title) noexcept;
 
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;

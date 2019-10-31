@@ -1,9 +1,10 @@
-#include "Application.hpp"
 #include <iostream>
+#include "Application.hpp"
+#include <Graphics/OpenGL/Screenshot.hpp>
 
 Application* Application::GetApplication()
 {
-	static Application* application = new Application;
+	static Application* application = new Application{};
 	return application;
 }
 
@@ -62,6 +63,12 @@ void Application::InputTest()
 	if (input.IsKeyTriggered(GLFW_KEY_F))
 	{
 		window.ToggleFullscreen();
+	}
+	if (input.IsKeyTriggered(GLFW_KEY_KP_9))
+	{
+		vector2<int> windowSize = window.WindowSize();
+		Graphics::Image screenShot = Graphics::capture_screenshot_of_back_buffer_to_image(windowSize.width, windowSize.height);
+		screenShot.SaveToPNG("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/ScreenShot/testScreenShot.png");
 	}
 }
 

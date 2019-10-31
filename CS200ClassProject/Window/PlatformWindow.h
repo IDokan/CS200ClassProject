@@ -1,7 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
+#include <string>
 #include "vector2.hpp"
 
 class PlatformWindow
@@ -15,6 +15,8 @@ public:
 	void TurnOnMonitorVerticaSynchronization(bool enable) noexcept;
 	bool IsMonitorVerticalSynchronizationOn() noexcept;
 	vector2<int> GetPlatformWindowSize() const noexcept;
+
+	void SetWindowTitle(const std::string& title) noexcept;
 
 	void ClearWindow() const noexcept;
 

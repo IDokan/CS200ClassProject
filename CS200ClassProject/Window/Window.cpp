@@ -50,3 +50,8 @@ void Window::ClearWindow() const noexcept
 {
 	platformWindow->ClearWindow();
 }
+
+void Window::SetWindowTitle(const std::string& title) noexcept
+{
+	platformWindow->SetWindowTitle(title);
+}
