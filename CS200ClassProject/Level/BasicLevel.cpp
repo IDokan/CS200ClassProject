@@ -16,7 +16,7 @@ L"AaBbCcDdEeFf\n\nGgHhIiJjKkLl\n\tMmNnOoPpQqRrSs\n\n\nTtUuVv\n\t\tWwXxYyZz");
 	//sketch.DrawEllipses(vector2<float>(0.f), vector2<float>(100.f, 200.f));
 	// C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/texture/rect.png
 	// C:/Users/KMU_USER/Desktop/GAM200Engine/texture/testSpriteSheet.png
-	//sketch.DrawTexture(vector2<float>(-100.f), vector2<float>(100.f), "C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/texture/rect.png");
+	sketch.DrawTexture(vector2<float>(-100.f), vector2<float>(100.f));
 	sketch.PushMatrix(MATRIX3::build_translation(vector2<float>(1250.f)));
 	{
 		sketch.DrawRectangles(vector2<float>(100.f), vector2<float>(50.f));
@@ -30,6 +30,7 @@ L"AaBbCcDdEeFf\n\nGgHhIiJjKkLl\n\tMmNnOoPpQqRrSs\n\n\nTtUuVv\n\t\tWwXxYyZz");
 		sketch.PopMatrix();
 	}
 	sketch.PopMatrix();
+	sketch.DrawParticle(dt);
 	sketch.FinishDrawing();
 }
 

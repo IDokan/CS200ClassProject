@@ -16,6 +16,28 @@ namespace std {
 class Sketch
 {
 public:
+
+	// Declare particle struct
+	struct Particle
+	{
+		vector2<float> position, velocity;
+		Graphics::Color4f color;
+		float life;
+
+		Particle()
+			: position(0.f), velocity(0.f), color(1.f), life(0.f) {}
+	};
+
+	struct Object
+	{
+		vector2<float> position;
+		vector2<float> velocity;
+
+		Object()
+			: position(0.f), velocity(0.f) {}
+	};
+	
+public:
 	Sketch() {}
 	void Init() noexcept;
 	void Update(float dt) noexcept;
@@ -43,12 +65,15 @@ public:
 	void DrawLines(float x1, float y1, float x2, float y2) noexcept;
 
 	// Draw Texture function
-	void DrawTexture(vector2<float> position, vector2<float> size, const std::filesystem::path& filepath) noexcept;
+	void DrawTexture(vector2<float> position, vector2<float> size) noexcept;
 
 	void PushMatrix(const matrix3<float>& matrix) noexcept;
 	void PopMatrix() noexcept;
 
 	void DrawText(vector2<float> position, vector2<float> scale, std::wstring text);
+
+	// Particle Tutorial
+	void DrawParticle(float dt);
 private:
 	[[nodiscard]] matrix3<float> CalculateHierarchical() noexcept;
 	
@@ -57,6 +82,10 @@ private:
 
 	void SetImage(const std::filesystem::path& filepath) noexcept;
 
+
+	// Particle Helper functions
+	int FirstUnusedParticle(const std::vector<Particle>& particles);
+	void RespawnParticle(Particle& particle, Object& object, vector2<float> offset);
 private:
 	std::stack<matrix3<float>> hierarchical{};
 	
@@ -76,5 +105,9 @@ private:
 	Graphics::BitmapFont font;
 	Graphics::Text text;
 	Graphics::material textMaterial;
+
+
+	// Particle member variable
+	std::vector<Particle> particles;
 };
 

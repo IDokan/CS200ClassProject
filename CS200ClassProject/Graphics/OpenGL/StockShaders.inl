@@ -186,4 +186,49 @@ void main()
 )");
 		return shader;
 	}
+
+	inline Shader& SHADER::particle() noexcept
+    {
+		static Shader shader{
+			R"(
+#version 330 core
+layout (location = 0) in vec2 position;
+layout (location = 1) in vec2 texture_coordinate;
+
+			out vec2 interpolated_texture_coordinate;
+			out vec4 ParticleColor;
+
+			uniform float depth;
+			uniform mat3 to_ndc;
+
+			void main()
+			{
+			float scale = 10.f;
+			interpolated_texture_coordinate = texture_coordinate;
+
+			vec3 position = to_ndc * vec3(position*scale, 1.f);
+			gl_Position = vec4(position.xy, depth, 1.0);
+			}
+			)",
+			R"(
+#version 330 core
+			in vec2 interpolated_texture_coordinate;
+			in vec4 ParticleColor;
+			out vec4 output_color;
+
+			uniform vec4 color;
+			uniform sampler2D texture_to_sample;
+
+			void main()
+			{
+			vec4 texel = texture(texture_to_sample, interpolated_texture_coordinate);
+			vec4 new_color = color * texel;
+			if(new_color.a <= 0.0f)
+				discard;
+			output_color = new_color;
+			}
+			)"
+		};
+		return shader;
+    }
 }
