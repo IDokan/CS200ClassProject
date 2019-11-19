@@ -1,40 +1,24 @@
 #include "BasicLevel.hpp"
 #include <vector2.hpp>
 
-void BasicLevel::Init()
-{
-	sketch.Init();
-}
-
 void BasicLevel::Update(float dt)
 {
 	sketch.Update(dt);
 
 	sketch.StartDrawing();
-	sketch.DrawText(vector2<float>(0.f), vector2<float>(1.f), 
-L"AaBbCcDdEeFf\n\nGgHhIiJjKkLl\n\tMmNnOoPpQqRrSs\n\n\nTtUuVv\n\t\tWwXxYyZz");
+//	sketch.DrawText(vector2<float>(0.f), vector2<float>(1.f), 
+//L"AaBbCcDdEeFf\n\nGgHhIiJjKkLl\n\tMmNnOoPpQqRrSs\n\n\nTtUuVv\n\t\tWwXxYyZz");
 	//sketch.DrawEllipses(vector2<float>(0.f), vector2<float>(100.f, 200.f));
 	// C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/texture/rect.png
 	// C:/Users/KMU_USER/Desktop/GAM200Engine/texture/testSpriteSheet.png
-	sketch.DrawTexture(vector2<float>(-100.f), vector2<float>(100.f));
-	sketch.PushMatrix(MATRIX3::build_translation(vector2<float>(1250.f)));
-	{
-		sketch.DrawRectangles(vector2<float>(100.f), vector2<float>(50.f));
-		sketch.DrawLines(vector2<float>(-100.f, -50.f), vector2<float>(-100.f, 100.f));
-		sketch.PushMatrix(MATRIX3::build_translation(vector2<float>(-1250.f)));
-		{
-			sketch.DrawTriangles(vector2<float>(60.f, 90.f), vector2<float>(70.f, 40.f), vector2<float>(50.f, 80.f));
-			sketch.DrawQuads(vector2<float>(-200.f), vector2<float>(-500.f),
-				vector2<float>(-400.f, -300.f), vector2<float>(-300.f, -200.f));
-		}
-		sketch.PopMatrix();
-	}
-	sketch.PopMatrix();
-	sketch.DrawParticle(dt);
-	sketch.FinishDrawing();
-}
+	//sketch.DrawTexture(vector2<float>(-100.f), vector2<float>(100.f));
 
-void BasicLevel::Clear()
-{
-	sketch.Clear();
+	sketch.DrawEllipses(vector2<float>{-300.f, 300.f}, vector2<float>{150.f, 30.f});
+	sketch.DrawRectangles(vector2<float>(-100.f, 300.f), vector2<float>(50.f, 125.f));
+	sketch.DrawQuads(vector2<float>(50.f, 350.f), vector2<float>(450.f, 350.f),
+		vector2<float>(350.f,150.f), vector2<float>(150.f, 150.f));
+	sketch.DrawTriangles(vector2<float>(0.f), vector2<float>(0.f, -400.f), vector2<float>(-400.f, -400.f));
+	sketch.DrawLines(vector2{ 100.f, -500.f }, vector2{ 500.f, -100.f });
+	
+	sketch.FinishDrawing();
 }

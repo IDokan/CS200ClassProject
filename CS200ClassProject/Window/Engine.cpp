@@ -14,7 +14,7 @@ void Engine::Update()
 	timer.Reset();
 	app->Update(dt);
 
-	if (input.IsKeyTriggered(GLFW_KEY_ESCAPE))
+	if (input.IsKeyTriggered(GLFW_KEY_ESCAPE) || !app->IsRunning())
 	{
 		app->Clear();
 		isRunning = false;

@@ -40,6 +40,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Level\BasicLevel.cpp" />
+    <ClCompile Include="Level\Demo.cpp" />
     <ClCompile Include="Window\Application.cpp" />
     <ClCompile Include="Window\Engine.cpp" />
     <ClCompile Include="Window\PlatformWindow.cpp" />
@@ -71,6 +72,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Level\BasicLevel.hpp" />
+    <ClInclude Include="Level\Demo.hpp" />
+    <ClInclude Include="Level\State.hpp" />
     <ClInclude Include="Timer\Timer.hpp" />
     <ClInclude Include="Window\Application.hpp" />
     <ClInclude Include="Window\Engine.hpp" />

@@ -4,6 +4,7 @@
 #include <Graphics/OpenGL/GL.hpp>
 #include <stb_image.h>
 #include <Graphics/OpenGL/Image.hpp>
+#include <Window/Application.hpp>
 
 namespace
 {
@@ -23,10 +24,29 @@ namespace
 	{
 		input.SetMouseWheel(x_offset, y_offset);
 	}
-	void WindowSizeCallback(GLFWwindow*, int /*width*/, int /*height*/)
+	void WindowSizeCallback(GLFWwindow*, int width, int height)
 	{
-		Graphics::GL::set_display_area(800, 600);
-		
+		Graphics::GL::set_display_area(width, height);
+	}
+	void WindowClose(GLFWwindow* window)
+	{
+		glfwSetWindowShouldClose(window, GLFW_FALSE);
+		Application::GetApplication()->SetIsRunning(false);
+	}
+	void WindowMaximizationCallback(GLFWwindow* window, int maximized)
+	{
+		if (maximized)
+		{
+			glfwMaximizeWindow(window);
+		}
+		else
+		{
+			glfwRestoreWindow(window);
+		}
+	}
+	void WindowFocusCallback(GLFWwindow* window, int focused)
+	{
+		Application::GetApplication()->SetIsPaused(!focused);
 	}
 }
 
@@ -62,6 +82,9 @@ bool PlatformWindow::CreateWindow() noexcept
 	glfwSetMouseButtonCallback(window, MouseButtonCallback);
 	glfwSetScrollCallback(window, MouseWheelScroll);
 	glfwSetWindowSizeCallback(window, WindowSizeCallback);
+	glfwSetWindowCloseCallback(window, WindowClose);
+	glfwSetWindowMaximizeCallback(window, WindowMaximizationCallback);
+	glfwSetWindowFocusCallback(window, WindowFocusCallback);
 	glfwSwapInterval(true);
 
 	GLFWimage icon[1];

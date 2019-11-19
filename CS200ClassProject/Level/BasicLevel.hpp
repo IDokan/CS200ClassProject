@@ -1,15 +1,13 @@
 #pragma once
 #include <Graphics/Sketch.hpp>
+#include <Level/State.hpp>
 
-class BasicLevel
+class BasicLevel : public State
 {
 public:
-	BasicLevel() {};
-	void Init();
+	BasicLevel(Demo& demo):State(demo) {};
 	void Update(float dt);
-	void Clear();
 
 private:
-	Sketch sketch;
 };
 

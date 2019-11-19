@@ -10,10 +10,13 @@ Application* Application::GetApplication()
 
 void Application::Init()
 {
+	isRunning = true;
+	isPaused = false;
+	
 	window.CreateWindow();
 	window.TurnOnMonitorVerticalSynchronization(true);
 
-	level0.Init();
+	demo.Init();
 	
 	input.Init();
 }
@@ -21,11 +24,16 @@ void Application::Init()
 void Application::Update(float dt)
 {
 	input.TriggeredReset();
-	
+
 	window.PollEvent();
+	
+	if (isPaused)
+	{
+		return;
+	}
 	InputTest();
 
-	level0.Update(dt);
+	demo.Update(dt);
 	
 	window.SwapBackBuffer();
 }
@@ -74,11 +82,31 @@ void Application::InputTest()
 
 void Application::Clear()
 {
-	level0.Clear();
+	demo.Clear();
 	window.ClearWindow();
 }
 
 vector2<int> Application::GetWindowSize() noexcept
 {
 	return window.WindowSize();
+}
+
+bool Application::IsRunning() const noexcept
+{
+	return isRunning;
+}
+
+void Application::SetIsRunning(bool flag) noexcept
+{
+	isRunning = flag;
+}
+
+bool Application::IsPaused() const noexcept
+{
+	return isPaused;
+}
+
+void Application::SetIsPaused(bool flag) noexcept
+{
+	isPaused = flag;
 }
