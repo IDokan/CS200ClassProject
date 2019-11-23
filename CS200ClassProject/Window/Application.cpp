@@ -24,45 +24,33 @@ void Application::Init()
 void Application::Update(float dt)
 {
 	input.TriggeredReset();
-
+	CalculateFPS(dt);
 	window.PollEvent();
 	
 	if (isPaused)
 	{
 		return;
 	}
-	InputTest();
+	BroadInputProcess();
 
 	demo.Update(dt);
 	
 	window.SwapBackBuffer();
 }
 
-void Application::InputTest()
+void Application::BroadInputProcess()
 {
-	if (input.IsKeyPressed(GLFW_KEY_A))
+	if (input.IsKeyTriggered(GLFW_KEY_H))
 	{
-		std::cout << "A" << std::endl;
+		demo.SetIsShowHelp(!demo.IsShowHelp());
 	}
-	if (input.IsKeyPressed(GLFW_KEY_B))
+	if (input.IsKeyTriggered(GLFW_KEY_0) || input.IsKeyTriggered(GLFW_KEY_KP_0))
 	{
-		std::cout << "B" << std::endl;
+		demo.SetStateIndex(0);
 	}
-	if (input.IsMouseButtonTriggered(GLFW_MOUSE_BUTTON_LEFT))
+	else if (input.IsKeyTriggered(GLFW_KEY_1) || input.IsKeyTriggered(GLFW_KEY_KP_1))
 	{
-		std::cout << "left mouse button triggered" << std::endl;
-	}
-	if (input.IsMouseButtonTriggered(GLFW_MOUSE_BUTTON_RIGHT))
-	{
-		std::cout << "right mouse button triggered" << std::endl;
-	}
-	if (input.IsMouseButtonTriggered(GLFW_MOUSE_BUTTON_MIDDLE))
-	{
-		std::cout << "middle mouse button triggered" << std::endl;
-	}
-	if (input.IsMouseDoubleClicked(GLFW_MOUSE_BUTTON_LEFT))
-	{
-		std::cout << "mouse button double clicked" << std::endl;
+		demo.SetStateIndex(1);
 	}
 	if (input.IsKeyTriggered(GLFW_KEY_V))
 	{
@@ -72,11 +60,23 @@ void Application::InputTest()
 	{
 		window.ToggleFullscreen();
 	}
-	if (input.IsKeyTriggered(GLFW_KEY_KP_9))
+	if (input.IsKeyTriggered(GLFW_KEY_F11))
 	{
 		vector2<int> windowSize = window.WindowSize();
 		Graphics::Image screenShot = Graphics::capture_screenshot_of_back_buffer_to_image(windowSize.width, windowSize.height);
-		screenShot.SaveToPNG("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/ScreenShot/testScreenShot.png");
+		screenShot.SaveToPNG("../testScreenShot.png");
+	}
+}
+
+void Application::CalculateFPS(float dt)
+{
+	fpsEllapsedTime += dt;
+	++fpsFrames;
+	if (fpsEllapsedTime >= 1.f)
+	{
+		window.SetWindowTitleWithFPS(fpsFrames);
+		fpsFrames = 0;
+		fpsEllapsedTime = 0;
 	}
 }
 

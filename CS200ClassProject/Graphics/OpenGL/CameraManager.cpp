@@ -30,6 +30,8 @@ void Graphics::CameraManager::Init() noexcept
 {
 	vector2<int> windowSize = Application::GetApplication()->GetWindowSize();
 	selectedCamera->cameraView.SetViewSize(windowSize.x, windowSize.y);
+	selectedCamera->cameraView.SetZoom(1.f);
+	selectedCamera->camera.InitializeVars();
 }
 
 /**
@@ -123,11 +125,10 @@ void Graphics::CameraManager::CameraMove(const float& zoomSize) noexcept
 	if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
 	{
 		const vector2<float>& mousePosition = input.GetMousePosition();
-		const vector2<float>& presentMousePosition = input.GetPresentMousePosition();
+		const vector2<float>& distance = (input.GetPresentMousePosition() - mousePosition) / selectedCamera->cameraView.GetZoom();
 
-		selectedCamera->camera.SetCenter(
-			selectedCamera->camera.GetCenter() + (presentMousePosition - mousePosition)
-		);
+		selectedCamera->camera.MoveRight(distance.x);
+		selectedCamera->camera.MoveUp(distance.y);
 
 		input.SetPresentMousePosition(mousePosition);
 	}
@@ -144,6 +145,15 @@ void Graphics::CameraManager::CameraMove(const float& zoomSize) noexcept
 		selectedCamera->cameraView.SetZoom(
 			selectedCamera->cameraView.GetZoom() / zoomSize
 		);
+	}
+
+	if (input.IsKeyPressed(GLFW_KEY_E))
+	{
+		selectedCamera->camera.Rotate(0.05);
+	}
+	if (input.IsKeyPressed(GLFW_KEY_Q))
+	{
+		selectedCamera->camera.Rotate(-0.05);
 	}
 }
 

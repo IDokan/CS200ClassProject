@@ -1,5 +1,6 @@
 #pragma once
 #include <stack>
+#include "Graphics/OpenGL/Mesh.hpp"
 #include "Graphics/OpenGL/Material.hpp"
 #include "Graphics/OpenGL/Vertices.hpp"
 #include "Graphics/OpenGL/CameraManager.hpp"
@@ -43,11 +44,17 @@ public:
 	void Update(float dt) noexcept;
 	void Clear() noexcept;
 
+	void InitCamera();
+	
 	// These two functions should be called
 	// before and after draw function in each frame
 	void StartDrawing() const noexcept;
 	void FinishDrawing() const noexcept;
 
+	// Setter functions
+	void SetBackgroundColor(Graphics::Color4f color);
+	void SetImage(const std::filesystem::path& filepath) noexcept;
+	
 	// Draw Shapes Functions
 	void DrawEllipses(vector2<float> position, vector2<float> size) noexcept;
 	void DrawEllipses(float x, float y, vector2<float> size) noexcept;
@@ -57,8 +64,9 @@ public:
 	void DrawRectangles(float x, float y, vector2<float> size) noexcept;
 	void DrawRectangles(vector2<float> position, float width, float height) noexcept;
 	void DrawRectangles(float x, float y, float width, float height) noexcept;
-	void DrawQuads(vector2<float> position1, vector2<float> position2, vector2<float> position3, vector2<float> position4) noexcept;
-	void DrawQuads(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) noexcept;
+	void DrawQuads(vector2<float> position1, vector2<float> position2, vector2<float> position3,
+		vector2<float> position4, Graphics::Color4f color = Graphics::Color4f{ 1.f }, float depth = 0.f) noexcept;
+	void DrawQuads(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, Graphics::Color4f color = Graphics::Color4f{ 1.f }, float depth = 0.f) noexcept;
 	void DrawTriangles(vector2<float> position1, vector2<float> position2, vector2<float> position3) noexcept;
 	void DrawTriangles(float x1, float y1, float x2, float y2, float x3, float y3) noexcept;
 	void DrawLines(vector2<float> position1, vector2<float> position2) noexcept;
@@ -70,17 +78,15 @@ public:
 	void PushMatrix(const matrix3<float>& matrix) noexcept;
 	void PopMatrix() noexcept;
 
-	void DrawText(vector2<float> position, vector2<float> scale, std::wstring text);
+	void DrawText(vector2<float> position, vector2<float> scale, std::wstring text, float depth = 0.f);
 
 	// Particle Tutorial
 	void DrawParticle(float dt);
 private:
 	[[nodiscard]] matrix3<float> CalculateHierarchical() noexcept;
 	
-	void Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices, const matrix3<float>& modelToWorld) noexcept;
-	void Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices) noexcept;
-
-	void SetImage(const std::filesystem::path& filepath) noexcept;
+	void Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices, const matrix3<float>& modelToWorld, Graphics::Color4f color = Graphics::Color4f{1.f}, float depth = 0.f) noexcept;
+	void Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices, Graphics::Color4f color = Graphics::Color4f{ 1.f }, float depth = 0.f) noexcept;
 
 
 	// Particle Helper functions
@@ -91,6 +97,8 @@ private:
 	
 	Graphics::CameraManager cameraManager;
 	Graphics::material material;
+
+	Graphics::Mesh mesh;
 	
 	Graphics::Vertices ellipse;
 	Graphics::Vertices rectangle;

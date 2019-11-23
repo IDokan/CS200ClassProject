@@ -22,6 +22,7 @@ public:
 	void TurnOnMonitorVerticalSynchronization(bool enable) noexcept;
 	void ClearWindow() const noexcept;
 	void SetWindowTitle(const std::string& title) noexcept;
+	void SetWindowTitleWithFPS(int fps) noexcept;
 
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;

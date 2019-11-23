@@ -24,8 +24,9 @@ public:
 	void SetIsPaused(bool flag) noexcept;
 	
 private:
-	void InputTest();
-	Application() {};
+	void BroadInputProcess();
+	void CalculateFPS(float dt);
+	Application() : isPaused(false), isRunning(true), fpsEllapsedTime(0.f), fpsFrames(0) {};
 
 	bool isPaused;
 	bool isRunning;
@@ -33,5 +34,9 @@ private:
 	Window window;
 
 	Demo demo;
+
+	/* FPS variables */
+	float fpsEllapsedTime;
+	int fpsFrames;
 };
 

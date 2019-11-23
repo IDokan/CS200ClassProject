@@ -35,6 +35,8 @@ Creation Date: 08.12.2019
         matrix3<float> CameraToWorld() const noexcept;
         matrix3<float> WorldToCamera() const noexcept;
 
+		void InitializeVars() noexcept;
+
     private:
         vector2<float> center{};
         vector2<float> up{0, 1};

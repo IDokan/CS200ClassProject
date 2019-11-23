@@ -57,3 +57,10 @@ Creation Date: 08.12.2019
                        up.x,    up.y,    0.f,
             0.f, 0.f, 1.f}) * MATRIX3::build_translation(-center);
     }
+
+void Camera::InitializeVars() noexcept
+{
+	SetCenter(vector2{ 0.f });
+	up = vector2{ 0.f, 1.f };
+	right = vector2{ 1.f, 0.f };
+}

@@ -55,3 +55,8 @@ void Window::SetWindowTitle(const std::string& title) noexcept
 {
 	platformWindow->SetWindowTitle(title);
 }
+
+void Window::SetWindowTitleWithFPS(int fps) noexcept
+{
+	platformWindow->SetWindowTitleWithFPS(fps);
+}

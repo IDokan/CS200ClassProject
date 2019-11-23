@@ -53,6 +53,8 @@
 	template <typename T>
 	constexpr  vector2<T> operator*(float scale, const vector2<T>& rhs) noexcept { return rhs * scale; };
 	template <typename T>
+	constexpr vector2<T> operator*(const vector2<T>& lhs, const vector2<T> rhs) noexcept;
+	template <typename T>
 	constexpr vector2<T> operator/(const vector2<T>& v, float divisor);
 
 	template<typename T>

@@ -5,6 +5,7 @@
 #include <stb_image.h>
 #include <Graphics/OpenGL/Image.hpp>
 #include <Window/Application.hpp>
+#include <sstream>
 
 namespace
 {
@@ -44,7 +45,7 @@ namespace
 			glfwRestoreWindow(window);
 		}
 	}
-	void WindowFocusCallback(GLFWwindow* window, int focused)
+	void WindowFocusCallback(GLFWwindow* /*window*/, int focused)
 	{
 		Application::GetApplication()->SetIsPaused(!focused);
 	}
@@ -154,6 +155,13 @@ vector2<int> PlatformWindow::GetPlatformWindowSize() const noexcept
 void PlatformWindow::SetWindowTitle(const std::string& title) noexcept
 {
 	glfwSetWindowTitle(window, title.c_str());
+}
+
+void PlatformWindow::SetWindowTitleWithFPS(int fps) noexcept
+{
+	std::stringstream ss;
+	ss << "Welcome! Here is Sinil's Engine!\t ["<<fps << "FPS]";
+	glfwSetWindowTitle(window, ss.str().c_str());
 }
 
 void PlatformWindow::ClearWindow() const noexcept

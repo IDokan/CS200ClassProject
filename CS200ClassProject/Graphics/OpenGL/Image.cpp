@@ -72,7 +72,6 @@ namespace Graphics
         {
 			return;
         }
-		// [-1 points] Your stride bytes is wrong.
         stbi_write_png(file_path.generic_string().c_str(), width, height, ChannelsPerColor,
                        GetPixelsPointer(), width * ChannelsPerColor);
     }

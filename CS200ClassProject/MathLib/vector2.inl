@@ -30,6 +30,12 @@
 	}
 
 	template <typename T>
+	constexpr vector2<T> operator*(const vector2<T>& lhs, const vector2<T> rhs) noexcept
+	{
+		return vector2<T>(lhs.x * rhs.x, lhs.y * rhs.y);
+	}
+
+	template <typename T>
 	constexpr vector2<T> operator/(const vector2<T>& v, float divisor)
 	{
 		if (divisor == 0)

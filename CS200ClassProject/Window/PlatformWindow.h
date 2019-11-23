@@ -17,6 +17,7 @@ public:
 	vector2<int> GetPlatformWindowSize() const noexcept;
 
 	void SetWindowTitle(const std::string& title) noexcept;
+	void SetWindowTitleWithFPS(int fps) noexcept;
 
 	void ClearWindow() const noexcept;
 

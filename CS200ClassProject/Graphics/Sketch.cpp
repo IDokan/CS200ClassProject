@@ -12,7 +12,6 @@ void Sketch::Init() noexcept
 	cameraManager.Init();
 
 	// Mesh Init
-	Graphics::Mesh mesh;
 	const Graphics::VertexLayoutDescription& solidLayout = { Graphics::SHADER::solid_color_vertex_layout() };
 	mesh.SetPointListType(Graphics::PointListPattern::TriangleFan);
 
@@ -36,14 +35,14 @@ void Sketch::Init() noexcept
 
 	// Texture Init
 	mesh.AddTextureCoordinate(vector2{ 0.f, 1.f });
-	mesh.AddTextureCoordinate(vector2{ 1.f });
+	mesh.AddTextureCoordinate(vector2{ 0.f});
 	mesh.AddTextureCoordinate(vector2{ 1.f, 0.f });
-	mesh.AddTextureCoordinate(vector2{ 0.f });
+	mesh.AddTextureCoordinate(vector2{ 1.f,});
 	sprite.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::textured_vertex_layout());
 
-	SetImage("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/texture/circle.png");
+	SetImage("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/fonts/Malgungothic/malgungothic.fnt");
 	// Font & Text Init
-	if (!font.LoadFromFile("C:/Users/KMU_USER/Desktop/GAM200Engine/assets/fonts/Malgungothic/malgungothic.fnt"))
+	if (!font.LoadFromFile("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/fonts/Malgungothic/malgungothic.fnt"))
 	{
 		std::cerr << "Falied to load file!" << std::endl;
 		// return false;
@@ -51,7 +50,7 @@ void Sketch::Init() noexcept
 	text.SetFont(font);
 	textMaterial.shader = &Graphics::SHADER::textured();
 	textMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
-	textMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -0.9f;
+	textMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = 0.f;
 
 
 	// Sketch::Init()
@@ -70,6 +69,11 @@ void Sketch::Clear() noexcept
 {
 }
 
+void Sketch::InitCamera()
+{
+	cameraManager.Init();
+}
+
 void Sketch::StartDrawing() const noexcept
 {
 	Graphics::GL::begin_drawing();
@@ -78,6 +82,11 @@ void Sketch::StartDrawing() const noexcept
 void Sketch::FinishDrawing() const noexcept
 {
 	Graphics::GL::end_drawing();
+}
+
+void Sketch::SetBackgroundColor(Graphics::Color4f color)
+{
+	Graphics::GL::set_clear_color(color);
 }
 
 void Sketch::DrawEllipses(vector2<float> position, vector2<float> size) noexcept
@@ -123,7 +132,7 @@ void Sketch::DrawRectangles(float x, float y, float width, float height) noexcep
 }
 
 void Sketch::DrawQuads(vector2<float> position1, vector2<float> position2, vector2<float> position3,
-	vector2<float> position4) noexcept
+	vector2<float> position4, Graphics::Color4f color, float depth) noexcept
 {
 	Graphics::Mesh mesh;
 	mesh.AddPoint(position1);
@@ -134,12 +143,12 @@ void Sketch::DrawQuads(vector2<float> position1, vector2<float> position2, vecto
 
 	quad.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::solid_color_vertex_layout());
 
-	Draw(&Graphics::SHADER::solid_color(), quad);
+	Draw(&Graphics::SHADER::solid_color(), quad, color, depth);
 }
 
-void Sketch::DrawQuads(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) noexcept
+void Sketch::DrawQuads(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, Graphics::Color4f color, float depth) noexcept
 {
-	DrawQuads(vector2<float>(x1, y1), vector2<float>(x2, y2), vector2<float>(x3, y3), vector2<float>(x4, y4));
+	DrawQuads(vector2<float>(x1, y1), vector2<float>(x2, y2), vector2<float>(x3, y3), vector2<float>(x4, y4), color, depth);
 }
 
 void Sketch::DrawTriangles(vector2<float> position1, vector2<float> position2, vector2<float> position3) noexcept
@@ -182,6 +191,7 @@ void Sketch::DrawTexture(vector2<float> position, vector2<float> size) noexcept
 	const matrix3<float> modelToWorld = MATRIX3::build_translation(position) * MATRIX3::build_scale(size);
 
 	textureMaterial.shader = &Graphics::SHADER::textured();
+	textureMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = 0.f;
 	textureMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
 	textureMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * modelToWorld;
 	Graphics::GL::draw(sprite, textureMaterial);
@@ -197,7 +207,7 @@ void Sketch::PopMatrix() noexcept
 	hierarchical.pop();
 }
 
-void Sketch::DrawText(vector2<float> position, vector2<float> scale, std::wstring textWritten)
+void Sketch::DrawText(vector2<float> position, vector2<float> scale, std::wstring textWritten, float depth)
 {
 	text.SetString(textWritten);
 
@@ -205,6 +215,7 @@ void Sketch::DrawText(vector2<float> position, vector2<float> scale, std::wstrin
 	{
 		const Graphics::Vertices& textVertices = *verticesTexturePair.first;
 		const Graphics::Texture* textTexture = verticesTexturePair.second;
+		textMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = depth;
 		textMaterial.textureUniforms.insert_or_assign(Graphics::SHADER::Uniform_Texture, Graphics::texture_uniform{ textTexture });
 		textMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_scale(scale) * MATRIX3::build_translation(position);
 		Graphics::GL::draw(textVertices, textMaterial);
@@ -318,17 +329,19 @@ matrix3<float> Sketch::CalculateHierarchical() noexcept
 }
 
 void Sketch::Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices,
-	const matrix3<float>& modelToWorld) noexcept
+	const matrix3<float>& modelToWorld, Graphics::Color4f color, float depth) noexcept
 {
 	material.shader = shader;
-	material.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
+	material.floatUniforms[Graphics::SHADER::Uniform_Depth] = depth;
+	material.color4fUniforms[Graphics::SHADER::Uniform_Color] = color;
 	material.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * modelToWorld ;
 	Graphics::GL::draw(vertices, material);
+	material.floatUniforms[Graphics::SHADER::Uniform_Depth] = 0;
 }
 
-void Sketch::Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices) noexcept
+void Sketch::Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices, Graphics::Color4f color, float depth) noexcept
 {
-	Draw(shader, vertices, MATRIX3::build_identity<float>());
+	Draw(shader, vertices, MATRIX3::build_identity<float>(), color, depth);
 }
 
 void Sketch::SetImage(const std::filesystem::path& filepath) noexcept
