@@ -36,19 +36,7 @@ void HierarchyLevel::Draw()
 	}
 	sketch.PopMatrix();
 
-	// Draw help
-	if (isShowHelp)
-	{
-		sketch.DrawQuads(vector2{ -2000.f, -2000.f }, vector2{ -2000.f, 2000.f }, vector2{ 2000.f, 2000.f }, vector2{ 2000.f, -2000.f }, Graphics::Color4f{ 0.f, 0.5f }, -0.8f);
-		sketch.DrawText(vector2{ -700.f, 300.f }, vector2{ 1.f }, L"This Level shows texture and hierarchical transform.\n\nTexture:\n\tIt is a pixel art that I draw with Aseprite.\n\nHierarchy:\n\tThe Suwhan's position is fixed by mouse position, \n\tThe UIs such as HP bar and NickName follow him \n\tbecause they are child him.\n", -0.9f);
-		sketch.DrawQuads(vector2{ -800.f, 500.f }, vector2{ -535.f, 500.f }, vector2{ -535.f, 400.f }, vector2{ -800.f, 400.f }, Graphics::Color4f{ 1.f, 0.f, 0.f, 1.f }, -0.85f);
-		sketch.DrawText(vector2{ -800.f, 400.f }, vector2{ 1.f }, L"'H' for Close", -0.95f);
-	}
-	else
-	{
-		sketch.DrawQuads(vector2{ -800.f, 500.f }, vector2{ -550.f, 500.f }, vector2{ -550.f, 400.f }, vector2{ -800.f, 400.f }, Graphics::Color4f{ 0.f }, -0.1f);
-		sketch.DrawText(vector2{ -800.f, 400.f }, vector2{ 1.f }, L"'H' for Help", -0.2f);
-	}
+	State::HelpBox(L"This Level shows texture and hierarchical transform.\n\nTexture:\n\tIt is a pixel art that I draw with Aseprite.\n\nHierarchy:\n\tThe Suwhan's position is fixed by mouse position, \n\tThe UIs such as HP bar and NickName follow him \n\tbecause they are child him.\n");
 	
 	sketch.FinishDrawing();
 }

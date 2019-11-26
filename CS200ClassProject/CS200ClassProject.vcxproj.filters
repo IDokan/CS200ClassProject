@@ -103,6 +103,9 @@
     <ClCompile Include="Level\HierarchyLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="Level\ParticlaLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window\Application.hpp">
@@ -196,6 +199,9 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="Level\HierarchyLevel.hpp">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Level\ParticleLevel.hpp">
       <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,7 +10,7 @@ void BasicLevel::Init()
 {
 	sketch.InitCamera();
 	sketch.SetBackgroundColor(Graphics::Color4f{ 0.f, 0.2f, 1.f });
-	sketch.SetImage("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/fonts/Malgungothic/malgungothic.fnt");
+	//sketch.SetImage("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/fonts/Malgungothic/malgungothic.fnt");
 }
 
 void BasicLevel::Clear()
@@ -50,20 +50,7 @@ void BasicLevel::Update(float dt)
 	sketch.DrawText(vector2{-750.f, 300.f}, vector2{1.f}, L"Test Text:\n\tThe quick brown \n\tfox jumps over \n\tthe lazy dog.");
 
 
-
-	if (isShowHelp)
-	{
-		sketch.InitCamera();
-		sketch.DrawQuads(vector2{ -2000.f, -2000.f }, vector2{ -2000.f, 2000.f }, vector2{ 2000.f, 2000.f }, vector2{ 2000.f, -2000.f }, Graphics::Color4f{ 0.f, 0.8f }, -0.8f);
-		sketch.DrawText(vector2{ -700.f, 300.f }, vector2{ 1.f }, L"This Level shows simple shapes, text, and camera moving.\n\nCamera Moving:\n\tRight mouse click and drag -> Camera Translation.\n\t'Q' & 'E' -> Camera Rotation.\n\tMouse Wheel Up & Down -> Camera Zooming.\n\nSimple Shapes:\n\tThere are Ellipses, Rectangles, Quads, Triangles, Lines.\n\nText:\n\tThere are text that describe what their kind is.", -0.9f);
-		sketch.DrawQuads(vector2{ -800.f, 500.f }, vector2{ -535.f, 500.f }, vector2{ -535.f, 400.f }, vector2{ -800.f, 400.f }, Graphics::Color4f{ 1.f, 0.f, 0.f, 1.f }, -0.85f);
-		sketch.DrawText(vector2{ -800.f, 400.f }, vector2{ 1.f }, L"'H' for Close", -0.95f);
-	}
-	else
-	{
-		sketch.DrawQuads(vector2{ -800.f, 500.f }, vector2{ -550.f, 500.f }, vector2{ -550.f, 400.f }, vector2{ -800.f, 400.f }, Graphics::Color4f{ 0.f }, -0.1f);
-		sketch.DrawText(vector2{ -800.f, 400.f }, vector2{ 1.f }, L"'H' for Help", -0.2f);
-	}
+	State::HelpBox(L"This Level shows simple shapes, text, and camera moving.\n\nCamera Moving:\n\tRight mouse click and drag -> Camera Translation.\n\t'Q' & 'E' -> Camera Rotation.\n\tMouse Wheel Up & Down -> Camera Zooming.\n\nSimple Shapes:\n\tThere are Ellipses, Rectangles, Quads, Triangles, Lines.\n\nText:\n\tThere are text that describe what their kind is.");
 	
 	sketch.FinishDrawing();
 }

@@ -35,12 +35,11 @@ void Sketch::Init() noexcept
 
 	// Texture Init
 	mesh.AddTextureCoordinate(vector2{ 0.f, 1.f });
-	mesh.AddTextureCoordinate(vector2{ 0.f});
+	mesh.AddTextureCoordinate(vector2{ 0.f });
 	mesh.AddTextureCoordinate(vector2{ 1.f, 0.f });
-	mesh.AddTextureCoordinate(vector2{ 1.f,});
+	mesh.AddTextureCoordinate(vector2{ 1.f, });
 	sprite.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::textured_vertex_layout());
 
-	SetImage("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/fonts/Malgungothic/malgungothic.fnt");
 	// Font & Text Init
 	if (!font.LoadFromFile("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/fonts/Malgungothic/malgungothic.fnt"))
 	{
@@ -54,9 +53,13 @@ void Sketch::Init() noexcept
 
 
 	// Sketch::Init()
-	for (unsigned int i = 0; i < 500; ++i)
+	for (unsigned int i = 0; i < particleSize; ++i)
 	{
-		particles.emplace_back();
+		exampleParticles.emplace_back();
+	}
+	for (unsigned int i = 0; i < smokeParticleSize; ++i)
+	{
+		smokeParticle.emplace_back();
 	}
 }
 
@@ -134,14 +137,14 @@ void Sketch::DrawRectangles(float x, float y, float width, float height) noexcep
 void Sketch::DrawQuads(vector2<float> position1, vector2<float> position2, vector2<float> position3,
 	vector2<float> position4, Graphics::Color4f color, float depth) noexcept
 {
-	Graphics::Mesh mesh;
-	mesh.AddPoint(position1);
-	mesh.AddPoint(position2);
-	mesh.AddPoint(position3);
-	mesh.AddPoint(position4);
-	mesh.SetPointListType(Graphics::PointListPattern::TriangleFan);
+	Graphics::Mesh mesh_;
+	mesh_.AddPoint(position1);
+	mesh_.AddPoint(position2);
+	mesh_.AddPoint(position3);
+	mesh_.AddPoint(position4);
+	mesh_.SetPointListType(Graphics::PointListPattern::TriangleFan);
 
-	quad.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::solid_color_vertex_layout());
+	quad.InitializeWithMeshAndLayout(mesh_, Graphics::SHADER::solid_color_vertex_layout());
 
 	Draw(&Graphics::SHADER::solid_color(), quad, color, depth);
 }
@@ -177,7 +180,7 @@ void Sketch::DrawLines(vector2<float> position1, vector2<float> position2) noexc
 	mesh.SetPointListType(Graphics::PointListPattern::Lines);
 
 	line.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::solid_color_vertex_layout());
-	
+
 	Draw(&Graphics::SHADER::solid_color(), line);
 }
 
@@ -222,31 +225,34 @@ void Sketch::DrawText(vector2<float> position, vector2<float> scale, std::wstrin
 	}
 }
 
-void Sketch::DrawParticle(float dt)
+void Sketch::DrawParticle(float dt) noexcept
 {
-	
-	// First of all, we need a list of particles and instantiate.
-	const unsigned int particleSize = 500;
 	// Then in each frame, we spawn several new particles with starting values
 	// Then for each particle that is still alive we update their values.
 	Object object{ };
 	// Sketch::Update();
 	const unsigned numOfNewParticlePerFrame = 1;
-	
+
 	// Add new partices
 	for (unsigned int i = 0; i < numOfNewParticlePerFrame; ++i)
 	{
-		const int unusedParticle = FirstUnusedParticle(particles);
-		const float xRandom = (rand() % 500) - 250;
-		const float  yRandom = rand() % 5000;
-		object.velocity = vector2<float>{ xRandom, yRandom};
-		vector2<float> offset{-100.f};
-		RespawnParticle(particles[unusedParticle], object, offset);
+		const int unusedParticle = FirstUnusedParticle(exampleParticles);
+		const float xRandom = static_cast<float>((rand() % 500) - 250);
+		const float  yRandom = static_cast<float>(rand() % 5000);
+		object.velocity = vector2<float>{ xRandom, yRandom };
+		vector2<float> offset{ -100.f };
+		
+		RespwanParticle(exampleParticles[unusedParticle], object, offset,
+			Graphics::Color4f{
+				((rand() % 100) / 100.f),
+				((rand() % 100) / 100.f),
+				((rand() % 100) / 100.f)
+			});
 	}
 	// Update all particles
 	for (unsigned int i = 0; i < particleSize; ++i)
 	{
-		Particle& p = particles[i];
+		Particle& p = exampleParticles[i];
 		p.life -= dt; // reduce life
 		if (p.life > 0.f)
 		{	// particle is alive, thus update
@@ -258,17 +264,75 @@ void Sketch::DrawParticle(float dt)
 			}
 		}
 	}
-	std::sort(particles.begin(), particles.end(), [](const Particle& a, const Particle& b) {return a.color.alpha > b.color.alpha; });
+	std::sort(exampleParticles.begin(), exampleParticles.end(), [](const Particle& a, const Particle& b) {return a.color.alpha > b.color.alpha; });
 	for (unsigned int i = 0; i < particleSize; ++i)
 	{
-		Particle& particle = particles.at(i);
+		Particle& particle = exampleParticles.at(i);
 		if (particle.life > 0.1f)
 		{
 			textureMaterial.shader = &Graphics::SHADER::particle();
 			textureMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -1.f;
 			textureMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
-			textureMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_scale(vector2{ 0.5f }) * MATRIX3::build_translation(particle.position);;
+			textureMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 0.5f });
 			Graphics::GL::draw(sprite, textureMaterial);
+		}
+	}
+}
+
+void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
+{
+	Object obj;
+	const unsigned numOfNewParticlePerFrame = 1;
+
+	// Revive dead particle into new Alive particle
+	for (unsigned int i = 0; i < numOfNewParticlePerFrame; ++i)
+	{
+		const int unusedParticle = FirstUnusedParticle(smokeParticle);
+		const float xRandomPosition = position.x + static_cast<float>((rand() % 300) - 150);
+		const float yPosition = position.y;
+		const float xRandomVelocity = static_cast<float>(rand() % 1000) - 500;
+		const float yRandomVelocity = static_cast<float>(rand() % 1000);
+		obj.position = vector2{ xRandomPosition, yPosition };
+		obj.velocity = vector2{ xRandomVelocity, yRandomVelocity };
+		RespwanParticle(smokeParticle[unusedParticle], obj, vector2{ 0.f }, Graphics::Color4f{1.f, 1.f});
+	}
+
+	// Update all particles
+	for (size_t i = 0; i < particleSize; ++i)
+	{
+		Particle& p = smokeParticle.at(i);
+		p.life -= dt;
+		if (p.life > 0.f)
+		{	// particle is alive, thus update
+			p.position += p.velocity * dt;
+			p.velocity.y -= 1.f;
+			if (p.position.y <= position.y - 200.f)
+			{
+				p.velocity.y = (-p.velocity.y)/2.f;
+			}
+			p.color.alpha -= dt * 0.25f;
+			if (p.color.alpha <= 0.f)
+			{
+				p.color.alpha = 0.f;
+			}
+		}
+	}
+	// Why do we need? For now, commented out
+	std::sort(begin(smokeParticle), end(smokeParticle), [](const Particle& particle1, const Particle& particle2)
+		{
+			return particle1.color.alpha > particle2.color.alpha;
+		});
+	
+			smokeParticleMaterial.shader = &Graphics::SHADER::particle();
+			smokeParticleMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -1.f;
+	for (size_t i = 0; i < smokeParticleSize; ++i)
+	{
+		Particle& particle = smokeParticle.at(i);
+		if (particle.life > 0.1f)
+		{
+			smokeParticleMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
+			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 5.f });
+			Graphics::GL::draw(sprite, smokeParticleMaterial);
 		}
 	}
 }
@@ -287,9 +351,9 @@ int Sketch::FirstUnusedParticle(const std::vector<Particle>& particles)
 		}
 	}
 	// Otherwise, do a linear search
-	for (unsigned int i =  0; i < lastusedParticle; ++i)
+	for (unsigned int i = 0; i < lastusedParticle; ++i)
 	{
-		if(particles[i].life  <= 0.f)
+		if (particles[i].life <= 0.f)
 		{
 			lastusedParticle = i;
 			return i;
@@ -300,16 +364,13 @@ int Sketch::FirstUnusedParticle(const std::vector<Particle>& particles)
 	return 0;
 }
 
-void Sketch::RespawnParticle(Particle& particle, Object& object, vector2<float> offset)
+void Sketch::RespwanParticle(Particle& particle, Object& object, vector2<float> offset, Graphics::Color4f color)
 {
-	float rColor = ((rand() % 100) / 100.f);
-	float gColor = ((rand() % 100) / 100.f);
-	float bColor = ((rand() % 100) / 100.f);
 
 	particle.position.x = object.position.x + offset.x;
 	particle.position.y = object.position.y + offset.y;
 
-	particle.color = Graphics::Color4f{ rColor, gColor, bColor, 1.f };
+	particle.color = color;
 	particle.life = 5.f;
 	particle.velocity = object.velocity * 0.1f;
 }
@@ -334,7 +395,7 @@ void Sketch::Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices,
 	material.shader = shader;
 	material.floatUniforms[Graphics::SHADER::Uniform_Depth] = depth;
 	material.color4fUniforms[Graphics::SHADER::Uniform_Color] = color;
-	material.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * modelToWorld ;
+	material.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * modelToWorld;
 	Graphics::GL::draw(vertices, material);
 	material.floatUniforms[Graphics::SHADER::Uniform_Depth] = 0;
 }
@@ -355,5 +416,19 @@ void Sketch::SetImage(const std::filesystem::path& filepath) noexcept
 	else
 	{
 		std::cout << "fail to load image\n";
+	}
+}
+
+void Sketch::SetSmokeParticleAsset(const std::filesystem::path& filepath) noexcept
+{
+	if (texture.LoadFromPNG(filepath))
+	{
+		const Graphics::texture_uniform container{ &texture, 0 };
+		smokeParticleMaterial.textureUniforms[Graphics::SHADER::Uniform_Texture] = container;
+		smokeParticleMaterial.vector2Uniforms[Graphics::SHADER::Uniform_ImageSize] = vector2{ float(texture.GetWidth()), float(texture.GetHeight()) };
+	}
+	else
+	{
+		std::cout << "fail to load image for particle 1\n";
 	}
 }

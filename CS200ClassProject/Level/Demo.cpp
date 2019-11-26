@@ -1,14 +1,16 @@
-#include "BasicLevel.hpp"
 #include <iostream>
 #include <Level/Demo.hpp>
+#include "BasicLevel.hpp"
 #include "HierarchyLevel.hpp"
+#include "ParticleLevel.hpp"
 
 void Demo::Init()
 {
 	sketch.Init();
 	states.push_back(new BasicLevel(*this));
 	states.push_back(new HierarchyLevel(*this));
-
+	states.push_back(new ParticleLevel(*this));
+	
 	states.at(currentStateIndex)->Init();
 	
 	std::cout << "Demo Controls:\n"
@@ -36,6 +38,11 @@ void Demo::Clear()
 
 void Demo::SetStateIndex(size_t newIndex) noexcept
 {
+	if (newIndex >= states.size())
+	{
+		return;
+	}
+	
 	newStateIndex = static_cast<int>(newIndex);
 }
 

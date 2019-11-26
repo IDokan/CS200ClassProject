@@ -16,6 +16,11 @@ namespace std {
 
 class Sketch
 {
+private:
+	// First of all, we need a list of particles and instantiate.
+	const size_t particleSize = 500;
+	const size_t smokeParticleSize = 500;
+	
 public:
 
 	// Declare particle struct
@@ -54,6 +59,7 @@ public:
 	// Setter functions
 	void SetBackgroundColor(Graphics::Color4f color);
 	void SetImage(const std::filesystem::path& filepath) noexcept;
+	void SetSmokeParticleAsset(const std::filesystem::path& filepath) noexcept;
 	
 	// Draw Shapes Functions
 	void DrawEllipses(vector2<float> position, vector2<float> size) noexcept;
@@ -81,7 +87,8 @@ public:
 	void DrawText(vector2<float> position, vector2<float> scale, std::wstring text, float depth = 0.f);
 
 	// Particle Tutorial
-	void DrawParticle(float dt);
+	void DrawParticle(float dt) noexcept;
+	void DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept;
 private:
 	[[nodiscard]] matrix3<float> CalculateHierarchical() noexcept;
 	
@@ -91,7 +98,7 @@ private:
 
 	// Particle Helper functions
 	int FirstUnusedParticle(const std::vector<Particle>& particles);
-	void RespawnParticle(Particle& particle, Object& object, vector2<float> offset);
+	void RespwanParticle(Particle& particle, Object& object, vector2<float> offset, Graphics::Color4f color);
 private:
 	std::stack<matrix3<float>> hierarchical{};
 	
@@ -116,6 +123,9 @@ private:
 
 
 	// Particle member variable
-	std::vector<Particle> particles;
+	std::vector<Particle> exampleParticles;
+
+	std::vector<Particle> smokeParticle;
+	Graphics::material smokeParticleMaterial;
 };
 

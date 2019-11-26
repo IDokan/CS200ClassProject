@@ -225,6 +225,10 @@ layout (location = 1) in vec2 texture_coordinate;
 			vec4 new_color = color * texel;
 			if(new_color.a <= 0.0f)
 				discard;
+			if(new_color.r <= 0.f && new_color.g <= 0.f && new_color.b <= 0.f)
+			{
+				discard;
+			}
 			output_color = new_color;
 			}
 			)"

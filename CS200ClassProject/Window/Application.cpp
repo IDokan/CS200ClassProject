@@ -52,6 +52,10 @@ void Application::BroadInputProcess()
 	{
 		demo.SetStateIndex(1);
 	}
+	else if(input.IsKeyTriggered(GLFW_KEY_2) || input.IsKeyTriggered(GLFW_KEY_KP_2))
+	{
+		demo.SetStateIndex(2);
+	}
 	if (input.IsKeyTriggered(GLFW_KEY_V))
 	{
 		window.TurnOnMonitorVerticalSynchronization(!window.IsMonitorVerticalSynchronizationOn());
