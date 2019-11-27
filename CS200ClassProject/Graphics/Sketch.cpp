@@ -61,6 +61,10 @@ void Sketch::Init() noexcept
 	{
 		smokeParticle.emplace_back();
 	}
+	for (size_t i = 0; i < explosionParticleSize; ++i)
+	{
+		explosionParticle.emplace_back();
+	}
 }
 
 void Sketch::Update(float /*dt*/) noexcept
@@ -237,6 +241,10 @@ void Sketch::DrawParticle(float dt) noexcept
 	for (unsigned int i = 0; i < numOfNewParticlePerFrame; ++i)
 	{
 		const int unusedParticle = FirstUnusedParticle(exampleParticles);
+		if (unusedParticle == -1)
+		{
+			break;
+		}
 		const float xRandom = static_cast<float>((rand() % 500) - 250);
 		const float  yRandom = static_cast<float>(rand() % 5000);
 		object.velocity = vector2<float>{ xRandom, yRandom };
@@ -288,13 +296,17 @@ void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
 	for (unsigned int i = 0; i < numOfNewParticlePerFrame; ++i)
 	{
 		const int unusedParticle = FirstUnusedParticle(smokeParticle);
+		if (unusedParticle == -1)
+		{
+			break;
+		}
 		const float xRandomPosition = position.x + static_cast<float>((rand() % 300) - 150);
 		const float yPosition = position.y;
 		const float xRandomVelocity = static_cast<float>(rand() % 1000) - 500;
 		const float yRandomVelocity = static_cast<float>(rand() % 1000);
 		obj.position = vector2{ xRandomPosition, yPosition };
 		obj.velocity = vector2{ xRandomVelocity, yRandomVelocity };
-		RespwanParticle(smokeParticle[unusedParticle], obj, vector2{ 0.f }, Graphics::Color4f{1.f, 1.f});
+		RespwanParticle(smokeParticle[unusedParticle], obj, vector2{ 0.f }, Graphics::Color4f{ 1.f, 1.f });
 	}
 
 	// Update all particles
@@ -308,7 +320,7 @@ void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
 			p.velocity.y -= 1.f;
 			if (p.position.y <= position.y - 200.f)
 			{
-				p.velocity.y = (-p.velocity.y)/2.f;
+				p.velocity.y = (-p.velocity.y) / 2.f;
 			}
 			p.color.alpha -= dt * 0.25f;
 			if (p.color.alpha <= 0.f)
@@ -322,12 +334,92 @@ void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
 		{
 			return particle1.color.alpha > particle2.color.alpha;
 		});
-	
-			smokeParticleMaterial.shader = &Graphics::SHADER::particle();
-			smokeParticleMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -1.f;
+
+	smokeParticleMaterial.shader = &Graphics::SHADER::particle();
+	smokeParticleMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -1.f;
 	for (size_t i = 0; i < smokeParticleSize; ++i)
 	{
 		Particle& particle = smokeParticle.at(i);
+		if (particle.life > 0.1f)
+		{
+			smokeParticleMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
+			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 5.f });
+			Graphics::GL::draw(sprite, smokeParticleMaterial);
+		}
+	}
+}
+
+void Sketch::DrawExplosionParticle(float dt, vector2<float> position) noexcept
+{
+	Object obj;
+	const unsigned numOfNewParticlePerFrame = 500;
+
+	// Revive dead particle into new Alive particle
+	for (unsigned int i = 0; i < numOfNewParticlePerFrame; ++i)
+	{
+		const int unusedParticle = FirstUnusedParticle(explosionParticle);
+		if (unusedParticle == -1)
+		{
+			break;
+		}
+		const float xRandomPosition = position.x;
+		const float yPosition = position.y;
+		const float radius = static_cast<float>(rand() % 1000);
+		const float radian = static_cast<float>(rand() % 314000) * 0.0001;
+		
+		const float xRandomVelocity = radius * cos(radian);
+		float yRandomVelocity = radius * sin(radian);
+
+		if (i % 2)
+		{
+			yRandomVelocity = -yRandomVelocity;
+		}
+
+		obj.position = vector2{ xRandomPosition, yPosition };
+		obj.velocity = vector2{ xRandomVelocity, yRandomVelocity };
+		RespwanParticle(explosionParticle[unusedParticle], obj, vector2{ 0.f }, Graphics::Color4f{ 1.f, 1.f, 0.f });
+	}
+
+	// Update all particles
+	for (size_t i = 0; i < particleSize; ++i)
+	{
+		Particle& p = explosionParticle.at(i);
+		p.life -= dt;
+		if (p.life > 0.f)
+		{	// particle is alive, thus update
+			p.position += p.velocity * dt;
+			p.velocity.x -= p.velocity.x * 0.01f;
+			p.velocity.y -= p.velocity.y * 0.01f;
+			if (abs(p.velocity.x) <= 0.01f)
+			{
+				p.velocity.x = 0.f;
+			}
+			if (abs(p.velocity.y) <= 0.01f)
+			{
+				p.velocity.y = 0.f;
+			}
+
+			const float t = magnitude(p.position - position);
+			p.color.green = (1 - (t / 200));
+			
+			p.color.alpha -= dt * 0.25f;
+			if (p.color.alpha <= 0.f)
+			{
+				p.color.alpha = 0.f;
+			}
+		}
+	}
+	// Why do we need? For now, commented out
+	std::sort(begin(explosionParticle), end(explosionParticle), [](const Particle& particle1, const Particle& particle2)
+		{
+			return particle1.color.alpha > particle2.color.alpha;
+		});
+
+	smokeParticleMaterial.shader = &Graphics::SHADER::particle();
+	smokeParticleMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -1.f;
+	for (size_t i = 0; i < smokeParticleSize; ++i)
+	{
+		Particle& particle = explosionParticle.at(i);
 		if (particle.life > 0.1f)
 		{
 			smokeParticleMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
@@ -360,8 +452,8 @@ int Sketch::FirstUnusedParticle(const std::vector<Particle>& particles)
 		}
 	}
 
-	// Override first particle if all others are alive
-	return 0;
+	// Otherwise, return -1
+	return -1;
 }
 
 void Sketch::RespwanParticle(Particle& particle, Object& object, vector2<float> offset, Graphics::Color4f color)
@@ -423,7 +515,7 @@ void Sketch::SetSmokeParticleAsset(const std::filesystem::path& filepath) noexce
 {
 	if (texture.LoadFromPNG(filepath))
 	{
-		const Graphics::texture_uniform container{ &texture, 0 };
+		const Graphics::texture_uniform container{ &texture, 1 };
 		smokeParticleMaterial.textureUniforms[Graphics::SHADER::Uniform_Texture] = container;
 		smokeParticleMaterial.vector2Uniforms[Graphics::SHADER::Uniform_ImageSize] = vector2{ float(texture.GetWidth()), float(texture.GetHeight()) };
 	}

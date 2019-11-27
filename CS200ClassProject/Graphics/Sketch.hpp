@@ -20,6 +20,7 @@ private:
 	// First of all, we need a list of particles and instantiate.
 	const size_t particleSize = 500;
 	const size_t smokeParticleSize = 500;
+	const size_t explosionParticleSize = 500;
 	
 public:
 
@@ -89,6 +90,7 @@ public:
 	// Particle Tutorial
 	void DrawParticle(float dt) noexcept;
 	void DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept;
+	void DrawExplosionParticle(float dt, vector2<float> position) noexcept;
 private:
 	[[nodiscard]] matrix3<float> CalculateHierarchical() noexcept;
 	
@@ -127,5 +129,7 @@ private:
 
 	std::vector<Particle> smokeParticle;
 	Graphics::material smokeParticleMaterial;
+
+	std::vector<Particle> explosionParticle;
 };
 

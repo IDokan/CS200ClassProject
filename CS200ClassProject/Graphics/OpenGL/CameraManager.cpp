@@ -149,11 +149,11 @@ void Graphics::CameraManager::CameraMove(const float& zoomSize) noexcept
 
 	if (input.IsKeyPressed(GLFW_KEY_E))
 	{
-		selectedCamera->camera.Rotate(0.05);
+		selectedCamera->camera.Rotate(0.05f);
 	}
 	if (input.IsKeyPressed(GLFW_KEY_Q))
 	{
-		selectedCamera->camera.Rotate(-0.05);
+		selectedCamera->camera.Rotate(-0.05f);
 	}
 }
 
