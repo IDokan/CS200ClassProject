@@ -25,6 +25,8 @@ namespace Graphics
         void begin_drawing() noexcept;
         // Call Draw() as many times as you need.
         void draw(const Vertices& vertices, const material& material) noexcept;
+    	// Call Instanced Draw. It is a optimized function call when you want to draw a lot of same object.
+		void drawInstanced(const Vertices& vertices, const material& material, int instanceCount) noexcept;
         // Lastly call EndDrawing() once at the very end.
         void end_drawing() noexcept;
 

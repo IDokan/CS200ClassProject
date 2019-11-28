@@ -63,7 +63,7 @@ namespace Graphics
         {
             glCheck(glEnableVertexAttribArray(count));
 
-            field_description temp = vertexDescription.at(count);
+            const field_description temp = vertexDescription.at(count);
 
 
                 glCheck(glVertexAttribPointer(count, temp.elementCount, temp.elementType, temp.shouldNormalize, vertexSize,

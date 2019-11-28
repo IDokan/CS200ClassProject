@@ -34,6 +34,7 @@ namespace Graphics
 		std::map<std::string, int>					intUniform{};
         std::map<std::string, float>           floatUniforms{};
 		std::map<std::string, vector2<float>>			vector2Uniforms{};
+		std::map<std::string, vector2<float>*>			arrayVector2Uniforms{};
         std::map<std::string, texture_uniform> textureUniforms{};
     };
 }

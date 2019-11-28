@@ -3,6 +3,7 @@
 #include "BasicLevel.hpp"
 #include "HierarchyLevel.hpp"
 #include "ParticleLevel.hpp"
+#include "Level/OptimizationLevel.hpp"
 
 void Demo::Init()
 {
@@ -10,6 +11,7 @@ void Demo::Init()
 	states.push_back(new BasicLevel(*this));
 	states.push_back(new HierarchyLevel(*this));
 	states.push_back(new ParticleLevel(*this));
+	states.push_back(new OptimizationLevel(*this));
 	
 	states.at(currentStateIndex)->Init();
 	

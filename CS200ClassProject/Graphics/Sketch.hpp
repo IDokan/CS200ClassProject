@@ -17,11 +17,13 @@ namespace std {
 class Sketch
 {
 private:
-	// First of all, we need a list of particles and instantiate.
+	// Maximum size of each particle
 	const size_t particleSize = 500;
 	const size_t smokeParticleSize = 500;
 	const size_t explosionParticleSize = 500;
-	
+
+	// Maximum size of translation to use instancing
+	#define maxSizeInstancing 100
 public:
 
 	// Declare particle struct
@@ -91,6 +93,9 @@ public:
 	void DrawParticle(float dt) noexcept;
 	void DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept;
 	void DrawExplosionParticle(float dt, vector2<float> position) noexcept;
+
+	// Instancing Tutorial
+	void Instancing(int instanceCount) noexcept;
 private:
 	[[nodiscard]] matrix3<float> CalculateHierarchical() noexcept;
 	
@@ -99,8 +104,11 @@ private:
 
 
 	// Particle Helper functions
+	void ParticleInit();
 	int FirstUnusedParticle(const std::vector<Particle>& particles);
 	void RespwanParticle(Particle& particle, Object& object, vector2<float> offset, Graphics::Color4f color);
+	// Instancing Helper functions
+	void InstancingInit();
 private:
 	std::stack<matrix3<float>> hierarchical{};
 	
@@ -124,12 +132,15 @@ private:
 	Graphics::material textMaterial;
 
 
-	// Particle member variable
+	// Particle member variables
 	std::vector<Particle> exampleParticles;
 
 	std::vector<Particle> smokeParticle;
 	Graphics::material smokeParticleMaterial;
 
 	std::vector<Particle> explosionParticle;
+
+	// Instancing translations
+	vector2<float> translations[maxSizeInstancing];
 };
 

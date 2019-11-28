@@ -21,6 +21,38 @@ Creation Date: 08.10.2019
 
 namespace Graphics
 {
+	void SendUniforms(const material& material)
+	{
+		for (const auto& element : material.color4fUniforms)
+		{
+			material.shader->SendUniformVariable(element.first, element.second);
+		}
+		for (const auto& element : material.matrix3Uniforms)
+		{
+			material.shader->SendUniformVariable(element.first, element.second);
+		}
+		for (const auto& element : material.intUniform)
+		{
+			material.shader->SendUniformVariable(element.first, element.second);
+		}
+		for (const auto& element : material.floatUniforms)
+		{
+			material.shader->SendUniformVariable(element.first, element.second);
+		}
+		for (const auto& element : material.vector2Uniforms)
+		{
+			material.shader->SendUniformVariable(element.first, element.second);
+		}
+		for (const auto& element : material.arrayVector2Uniforms)
+		{
+			material.shader->SendUniformVariable(element.first, element.second);
+		}
+		for (const auto& element : material.textureUniforms)
+		{
+			Texture::SelectTextureForSlot(*element.second.texture, element.second.textureSlot);
+		}
+	}
+	
     void GL::setup() noexcept
     {
         set_clear_color(Color4f{0, 255});
@@ -42,31 +74,24 @@ namespace Graphics
         Shader::Select(*material.shader);
         Vertices::Select(vertices);
 
-        for (const auto & element : material.color4fUniforms)
-        {
-            material.shader->SendUniformVariable(element.first, element.second);
-        }
-        for (const auto & element : material.matrix3Uniforms)
-        {
-            material.shader->SendUniformVariable(element.first, element.second);
-        }
-		for (const auto& element : material.intUniform)
-		{
-			material.shader->SendUniformVariable(element.first, element.second);
-		}
-        for (const auto& element : material.floatUniforms)
-        {
-            material.shader->SendUniformVariable(element.first, element.second);
-        }
-		for (const auto& element : material.vector2Uniforms)
-		{
-			material.shader->SendUniformVariable(element.first, element.second);
-		}
-        for (const auto & element : material.textureUniforms)
-        {
-            Texture::SelectTextureForSlot(*element.second.texture, element.second.textureSlot);
-        }
+		SendUniforms(material);
+
         glCheck(glDrawArrays(vertices.GetVerticesListPattern(), 0, vertices.GetVerticesCount()));
+    	/*
+    	 *	glDrawArraysInstanced(vertices.GetVerticesListPattern(), 0, vertices.GetVerticesCount(), InstanceCount......);
+    	 *
+    	 * 
+    	 */
+    }
+
+    void GL::drawInstanced(const Vertices& vertices, const material& material, int instanceCount) noexcept
+    {
+		Shader::Select(*material.shader);
+		Vertices::Select(vertices);
+
+		SendUniforms(material);
+
+		glCheck(glDrawArraysInstanced(vertices.GetVerticesListPattern(), 0, vertices.GetVerticesCount(), instanceCount));
     }
 
     void GL::end_drawing() noexcept { glCheck(glFinish()); }

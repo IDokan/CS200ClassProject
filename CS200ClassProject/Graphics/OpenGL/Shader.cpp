@@ -140,6 +140,11 @@ void Graphics::Shader::SendUniformVariable(const std::string& variable_name, vec
 	glCheck(glUniform2f(GetUniformLocation(variable_name), number.x, number.y));
 }
 
+void Graphics::Shader::SendUniformVariable(const std::string& variable_name, vector2<float>* number) noexcept
+{
+	glCheck(glUniform2fv(GetUniformLocation(variable_name), 100, &number->elements[0]));
+}
+
 void Graphics::Shader::SendUniformVariable(const std::string& variable_name, Color4f color) noexcept
 {
 	glCheck(glUniform4f(GetUniformLocation(variable_name), color.red, color.green, color.blue, color.alpha));

@@ -51,20 +51,9 @@ void Sketch::Init() noexcept
 	textMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
 	textMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = 0.f;
 
+	ParticleInit();
 
-	// Sketch::Init()
-	for (unsigned int i = 0; i < particleSize; ++i)
-	{
-		exampleParticles.emplace_back();
-	}
-	for (unsigned int i = 0; i < smokeParticleSize; ++i)
-	{
-		smokeParticle.emplace_back();
-	}
-	for (size_t i = 0; i < explosionParticleSize; ++i)
-	{
-		explosionParticle.emplace_back();
-	}
+	InstancingInit();
 }
 
 void Sketch::Update(float /*dt*/) noexcept
@@ -246,9 +235,9 @@ void Sketch::DrawParticle(float dt) noexcept
 			break;
 		}
 		const float xRandom = static_cast<float>((rand() % 500) - 250);
-		const float  yRandom = static_cast<float>(rand() % 5000);
+		const float  yRandom = -static_cast<float>(rand() % 5000);
 		object.velocity = vector2<float>{ xRandom, yRandom };
-		vector2<float> offset{ -100.f };
+		vector2<float> offset{ -500.f,350.f };
 		
 		RespwanParticle(exampleParticles[unusedParticle], object, offset,
 			Graphics::Color4f{
@@ -279,7 +268,7 @@ void Sketch::DrawParticle(float dt) noexcept
 		if (particle.life > 0.1f)
 		{
 			textureMaterial.shader = &Graphics::SHADER::particle();
-			textureMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -1.f;
+			textureMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -0.5f;
 			textureMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
 			textureMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 0.5f });
 			Graphics::GL::draw(sprite, textureMaterial);
@@ -303,7 +292,7 @@ void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
 		const float xRandomPosition = position.x + static_cast<float>((rand() % 300) - 150);
 		const float yPosition = position.y;
 		const float xRandomVelocity = static_cast<float>(rand() % 1000) - 500;
-		const float yRandomVelocity = static_cast<float>(rand() % 1000);
+		const float yRandomVelocity = static_cast<float>(rand() % 500);
 		obj.position = vector2{ xRandomPosition, yPosition };
 		obj.velocity = vector2{ xRandomVelocity, yRandomVelocity };
 		RespwanParticle(smokeParticle[unusedParticle], obj, vector2{ 0.f }, Graphics::Color4f{ 1.f, 1.f });
@@ -318,7 +307,7 @@ void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
 		{	// particle is alive, thus update
 			p.position += p.velocity * dt;
 			p.velocity.y -= 1.f;
-			if (p.position.y <= position.y - 200.f)
+			if (p.position.y <= position.y - 150.f)
 			{
 				p.velocity.y = (-p.velocity.y) / 2.f;
 			}
@@ -336,14 +325,14 @@ void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
 		});
 
 	smokeParticleMaterial.shader = &Graphics::SHADER::particle();
-	smokeParticleMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -1.f;
+	smokeParticleMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -0.5f;
 	for (size_t i = 0; i < smokeParticleSize; ++i)
 	{
 		Particle& particle = smokeParticle.at(i);
 		if (particle.life > 0.1f)
 		{
 			smokeParticleMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
-			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 5.f });
+			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 2.5f });
 			Graphics::GL::draw(sprite, smokeParticleMaterial);
 		}
 	}
@@ -416,17 +405,27 @@ void Sketch::DrawExplosionParticle(float dt, vector2<float> position) noexcept
 		});
 
 	smokeParticleMaterial.shader = &Graphics::SHADER::particle();
-	smokeParticleMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -1.f;
+	smokeParticleMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -0.5f;
 	for (size_t i = 0; i < smokeParticleSize; ++i)
 	{
 		Particle& particle = explosionParticle.at(i);
 		if (particle.life > 0.1f)
 		{
 			smokeParticleMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
-			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 5.f });
+			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 0.75f });
 			Graphics::GL::draw(sprite, smokeParticleMaterial);
 		}
 	}
+}
+
+void Sketch::Instancing(int instanceCount) noexcept
+{
+	textureMaterial.shader = &Graphics::SHADER::texturedInstanced();
+	textureMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = 0.f;
+	textureMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
+	textureMaterial.arrayVector2Uniforms[Graphics::SHADER::Uniform_Offsets] = translations;
+	textureMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical();
+	Graphics::GL::drawInstanced(sprite, textureMaterial, instanceCount);
 }
 
 int Sketch::FirstUnusedParticle(const std::vector<Particle>& particles)
@@ -467,6 +466,23 @@ void Sketch::RespwanParticle(Particle& particle, Object& object, vector2<float> 
 	particle.velocity = object.velocity * 0.1f;
 }
 
+void Sketch::InstancingInit()
+{
+	int index = 0;
+	float offset = 0.1f;
+	for (int y = -400; y < 500; y+=120)
+	{
+		for (int x = -750; x < 850; x +=150)
+		{
+			if (index >= 100)
+			{
+				return;
+			}
+			translations[index++] = vector2<float>(static_cast<float>(x), static_cast<float>(y));
+		}
+	}
+}
+
 matrix3<float> Sketch::CalculateHierarchical() noexcept
 {
 	matrix3 result = MATRIX3::build_identity < float >();
@@ -495,6 +511,23 @@ void Sketch::Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices,
 void Sketch::Draw(Graphics::Shader* shader, const Graphics::Vertices& vertices, Graphics::Color4f color, float depth) noexcept
 {
 	Draw(shader, vertices, MATRIX3::build_identity<float>(), color, depth);
+}
+
+void Sketch::ParticleInit()
+{
+	// Sketch::Init()
+	for (unsigned int i = 0; i < particleSize; ++i)
+	{
+		exampleParticles.emplace_back();
+	}
+	for (unsigned int i = 0; i < smokeParticleSize; ++i)
+	{
+		smokeParticle.emplace_back();
+	}
+	for (size_t i = 0; i < explosionParticleSize; ++i)
+	{
+		explosionParticle.emplace_back();
+	}
 }
 
 void Sketch::SetImage(const std::filesystem::path& filepath) noexcept
