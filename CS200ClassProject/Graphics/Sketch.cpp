@@ -182,13 +182,13 @@ void Sketch::DrawLines(float x1, float y1, float x2, float y2) noexcept
 	DrawLines(vector2<float>(x1, y1), vector2<float>(x2, y2));
 }
 
-void Sketch::DrawTexture(vector2<float> position, vector2<float> size) noexcept
+void Sketch::DrawTexture(vector2<float> position, vector2<float> size, Graphics::Color4f color) noexcept
 {
 	const matrix3<float> modelToWorld = MATRIX3::build_translation(position) * MATRIX3::build_scale(size);
 
 	textureMaterial.shader = &Graphics::SHADER::textured();
 	textureMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = 0.f;
-	textureMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
+	textureMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = color;
 	textureMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * modelToWorld;
 	Graphics::GL::draw(sprite, textureMaterial);
 }
@@ -295,7 +295,7 @@ void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
 		const float yRandomVelocity = static_cast<float>(rand() % 500);
 		obj.position = vector2{ xRandomPosition, yPosition };
 		obj.velocity = vector2{ xRandomVelocity, yRandomVelocity };
-		RespwanParticle(smokeParticle[unusedParticle], obj, vector2{ 0.f }, Graphics::Color4f{ 1.f, 1.f });
+		RespwanParticle(smokeParticle[unusedParticle], obj, vector2{ 0.f }, Graphics::Color4f{ 0.545f, 0.f, 0.545f });
 	}
 
 	// Update all particles
@@ -332,7 +332,7 @@ void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
 		if (particle.life > 0.1f)
 		{
 			smokeParticleMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
-			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 2.5f });
+			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 1.25f });
 			Graphics::GL::draw(sprite, smokeParticleMaterial);
 		}
 	}
@@ -412,7 +412,7 @@ void Sketch::DrawExplosionParticle(float dt, vector2<float> position) noexcept
 		if (particle.life > 0.1f)
 		{
 			smokeParticleMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
-			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 0.75f });
+			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 0.5f });
 			Graphics::GL::draw(sprite, smokeParticleMaterial);
 		}
 	}
@@ -424,8 +424,18 @@ void Sketch::Instancing(int instanceCount) noexcept
 	textureMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = 0.f;
 	textureMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
 	textureMaterial.arrayVector2Uniforms[Graphics::SHADER::Uniform_Offsets] = translations;
+	textureMaterial.arrayVector3Uniforms[Graphics::SHADER::Uniform_Color_Array] = colors;
+	textureMaterial.arrayVector2Uniforms[Graphics::SHADER::Uniform_Scales] = scales;
 	textureMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical();
 	Graphics::GL::drawInstanced(sprite, textureMaterial, instanceCount);
+}
+
+void Sketch::NoInstancing(int instanceCount) noexcept
+{
+	for (size_t i = 0; i < instanceCount; ++i)
+	{
+		DrawTexture(translations[i], scales[i], Graphics::Color4f{ colors[i].x, colors[i].y, colors[i].z });
+	}
 }
 
 int Sketch::FirstUnusedParticle(const std::vector<Particle>& particles)
@@ -468,17 +478,20 @@ void Sketch::RespwanParticle(Particle& particle, Object& object, vector2<float> 
 
 void Sketch::InstancingInit()
 {
+	Graphics::Color4f color{ 0.f };
 	int index = 0;
-	float offset = 0.1f;
-	for (int y = -400; y < 500; y+=120)
+	for (int y = -450; y < 90000; y+=120)
 	{
-		for (int x = -750; x < 850; x +=150)
+		for (int x = -750; x < 850; x += 150)
 		{
-			if (index >= 100)
+			if (index >= maxSizeInstancing)
 			{
 				return;
 			}
-			translations[index++] = vector2<float>(static_cast<float>(x), static_cast<float>(y));
+			translations[index] = vector2<float>(static_cast<float>(x), static_cast<float>(y));
+			colors[index] = vector3<float>{ static_cast<float>(rand() % 255)/255.f, static_cast<float>(rand() % 255)/255.f, static_cast<float>(rand() % 255)/255.f };
+			scales[index] = vector2<float>{ static_cast<float>((rand() % 100)+50) };
+			++index;
 		}
 	}
 }

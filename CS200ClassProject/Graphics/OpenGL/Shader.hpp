@@ -17,11 +17,12 @@ template<typename >
 struct matrix3;
 template<typename >
 struct vector2;
+template<typename >
+struct vector3;
 
 namespace Graphics
 {
 	class Color4f;
-	struct vector3;
 
 	class[[nodiscard]] Shader
 	{
@@ -38,6 +39,7 @@ namespace Graphics
 		void SendUniformVariable(const std::string& variable_name, int number) noexcept;
 		void SendUniformVariable(const std::string& variable_name, vector2<float> number) noexcept;
 		void SendUniformVariable(const std::string& variable_name, vector2<float>* number) noexcept;
+		void SendUniformVariable(const std::string& variable_name, vector3<float>* number) noexcept;
 		void SendUniformVariable(const std::string& variable_name, Color4f color) noexcept;
 
 		constexpr unsigned GetShaderHandler() const noexcept { return handleToShader; }

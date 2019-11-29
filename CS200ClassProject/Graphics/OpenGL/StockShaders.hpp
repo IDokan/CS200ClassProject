@@ -113,7 +113,11 @@ namespace Graphics
 		constexpr const char* Uniform_Frame = "frame";
 		constexpr const char* Uniform_Index = "index";
 		constexpr const char* Uniform_ImageSize = "image_size";
+
+    	// Only using for instancing.
 		constexpr const char* Uniform_Offsets = "offsets";
+		constexpr const char* Uniform_Color_Array = "colorArray";
+		constexpr const char* Uniform_Scales = "scales";
     };
 }
 

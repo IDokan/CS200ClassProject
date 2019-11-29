@@ -15,6 +15,7 @@ Creation Date: 08.10.2019
 #include <string>
 #include "matrix3.hpp"
 #include "vector2.hpp"
+#include "vector3.hpp"
 
 namespace Graphics
 {
@@ -35,6 +36,7 @@ namespace Graphics
         std::map<std::string, float>           floatUniforms{};
 		std::map<std::string, vector2<float>>			vector2Uniforms{};
 		std::map<std::string, vector2<float>*>			arrayVector2Uniforms{};
+		std::map<std::string, vector3<float>*>			arrayVector3Uniforms{};
         std::map<std::string, texture_uniform> textureUniforms{};
     };
 }

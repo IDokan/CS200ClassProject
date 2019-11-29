@@ -5,7 +5,9 @@
 //		
 //		// Template Issue
 //		// At least, both float and int.
-//		// Maybe double....
+//		// Maybe double...
+//
+//		Float is Okay and make sure to test every function
 
 #define CATCH_CONFIG_MAIN
 #include "Catch/catch.hpp"

@@ -39,6 +39,11 @@ void Input::TriggeredReset()
 
 void Input::SetKeyboardInput(int key, int action)
 {
+	if (key >= GLFW_KEY_LAST || key == GLFW_KEY_UNKNOWN)
+	{
+		return;
+	}
+	
 	switch (action)
 	{
 	case GLFW_PRESS:

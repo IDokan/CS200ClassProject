@@ -82,7 +82,7 @@ public:
 	void DrawLines(float x1, float y1, float x2, float y2) noexcept;
 
 	// Draw Texture function
-	void DrawTexture(vector2<float> position, vector2<float> size) noexcept;
+	void DrawTexture(vector2<float> position, vector2<float> size, Graphics::Color4f color = Graphics::Color4f{1.f}) noexcept;
 
 	void PushMatrix(const matrix3<float>& matrix) noexcept;
 	void PopMatrix() noexcept;
@@ -96,6 +96,7 @@ public:
 
 	// Instancing Tutorial
 	void Instancing(int instanceCount) noexcept;
+	void NoInstancing(int instanceCount) noexcept;
 private:
 	[[nodiscard]] matrix3<float> CalculateHierarchical() noexcept;
 	
@@ -109,6 +110,7 @@ private:
 	void RespwanParticle(Particle& particle, Object& object, vector2<float> offset, Graphics::Color4f color);
 	// Instancing Helper functions
 	void InstancingInit();
+	
 private:
 	std::stack<matrix3<float>> hierarchical{};
 	
@@ -142,5 +144,7 @@ private:
 
 	// Instancing translations
 	vector2<float> translations[maxSizeInstancing];
+	vector3<float> colors[maxSizeInstancing];
+	vector2<float> scales[maxSizeInstancing];
 };
 

@@ -10,5 +10,7 @@ public:
 	void Init() override;
 	void Update(float dt) override;
 	void Clear() override;
-	
+
+private:
+	float time;
 };
