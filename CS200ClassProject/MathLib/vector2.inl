@@ -100,12 +100,12 @@
 	constexpr float angleBetween(vector2<T> lhs, vector2<T> rhs)
 	{
 		const float magnitudeOfLhs = magnitude(lhs);
-		if (magnitudeOfLhs == 0)
+		if (magnitudeOfLhs == 0.f)
 		{
 			throw "Magnitude of 1st parameter is zero. It cause dividing by zero";
 		}
 		const float magnitudeOfRhs = magnitude(rhs);
-		if (magnitudeOfRhs)
+		if (magnitudeOfRhs == 0.f)
 		{
 			throw "Magnitude of 2nd parameter is zero. It cause dividing by zero";
 		}
