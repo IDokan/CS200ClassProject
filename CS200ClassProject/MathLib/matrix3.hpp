@@ -40,6 +40,8 @@
 	constexpr void    operator*=(matrix3<T>& m1, const matrix3<T>& m2) noexcept;
 	template<typename T>
 	constexpr vector3<T> operator*(const matrix3<T>& m, vector3<T> v) noexcept;
+	template<typename T>
+	constexpr bool operator==(const matrix3<T>& lhs, const matrix3 <T>& rhs);
 
 	template<typename>
 	struct vector2;

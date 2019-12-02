@@ -21,7 +21,7 @@
 	template <typename T>
 	constexpr vector3<T> operator-(const vector3<T>& lhs, const vector3<T>& rhs) noexcept
 	{
-		return vector3(lhs.x - rhs.y, lhs.y - rhs.y, lhs.z - rhs.z);
+		return vector3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
 	}
 
 	template <typename T>
@@ -76,7 +76,7 @@
 	}
 
 	template <typename T>
-	constexpr T magnitude_squared(const vector3<T>& lhs) noexcept
+	constexpr T magnitudeSquared(const vector3<T>& lhs) noexcept
 	{
 		return dot(lhs, lhs);
 	}
@@ -84,7 +84,7 @@
 	template <typename T>
 	constexpr float magnitude(const vector3<T>& lhs) noexcept
 	{
-		return std::sqrt(magnitude_squared(lhs));
+		return std::sqrt(magnitudeSquared(lhs));
 	}
 
 	template <typename T>
@@ -94,19 +94,19 @@
 	}
 
 	template <typename T>
-	constexpr T distance_between_squared(const vector3<T>& lhs, const vector3<T>& rhs) noexcept
+	constexpr T distanceBetweenSquared(const vector3<T>& lhs, const vector3<T>& rhs) noexcept
 	{
-		return magnitude_squared(lhs - rhs);
+		return magnitudeSquared(lhs - rhs);
 	}
 
 	template <typename T>
-	constexpr float distance_between(const vector3<T>& lhs, const vector3<T>& rhs) noexcept
+	constexpr float distanceBetween(const vector3<T>& lhs, const vector3<T>& rhs) noexcept
 	{
-		std::sqrt(distance_between_squared(lhs, rhs));
+		return std::sqrt(distanceBetweenSquared(lhs, rhs));
 	}
 
 	template <typename T>
-	constexpr float angle_between(const vector3<T>& lhs, const vector3<T>& rhs) noexcept
+	constexpr float angleBetween(const vector3<T>& lhs, const vector3<T>& rhs) noexcept
 	{
 		const float magnitudeOfLhs = magnitude(lhs);
 		if (magnitudeOfLhs == 0)

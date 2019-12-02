@@ -66,17 +66,17 @@
 	template<typename T>
 	constexpr vector3<T>             cross(const vector3<T>& lhs, const vector3<T>& rhs) noexcept;
 	template<typename T>
-	constexpr T magnitude_squared(const vector3<T>& lhs) noexcept;
+	constexpr T magnitudeSquared(const vector3<T>& lhs) noexcept;
 	template<typename T>
 	constexpr float magnitude(const vector3<T>& lhs) noexcept;
 	template<typename T>
 	constexpr vector3<T>             normalize(const vector3<T>& lhs) noexcept;
 	template<typename T>
-	constexpr T distance_between_squared(const vector3<T>& lhs, const vector3<T>& rhs) noexcept;
+	constexpr T distanceBetweenSquared(const vector3<T>& lhs, const vector3<T>& rhs) noexcept;
 	template<typename T>
-	constexpr float distance_between(const vector3<T>& lhs, const vector3<T>& rhs) noexcept;
+	constexpr float distanceBetween(const vector3<T>& lhs, const vector3<T>& rhs) noexcept;
 	template<typename T>
-	constexpr float angle_between(const vector3<T>& lhs, const vector3<T>& rhs) noexcept;
+	constexpr float angleBetween(const vector3<T>& lhs, const vector3<T>& rhs) noexcept;
 
 #pragma warning(pop)
 
