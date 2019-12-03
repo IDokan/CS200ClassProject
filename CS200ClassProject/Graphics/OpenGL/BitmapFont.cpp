@@ -16,8 +16,6 @@ namespace Graphics
 {
     bool BitmapFont::LoadFromFile(const std::filesystem::path& filename)
 	{
-		std::cout << filename << std::endl;
-		std::cout << filename.relative_path() << std::endl;
         if (CanParseFile(filename) == false)
         {
             return false;

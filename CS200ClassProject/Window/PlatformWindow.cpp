@@ -9,12 +9,54 @@
 
 namespace
 {
+	struct WindowSizePosition
+	{
+		WindowSizePosition(float width, float height, float x = 0.f, float y = 0.f)
+			:width(width), height(height), x(x), y(y)
+		{}
+		
+		float width;
+		float height;
+		float x;
+		float y;
+	} ;
+
+	WindowSizePosition GetWindowValueByResolution(WindowSizePosition raw)
+	{
+		float  virtual_width = 1600;
+		float virtual_height = 900;
+		float targetAspectRadio = virtual_width / virtual_height;
+
+		float adjustedWidth = static_cast<float>(raw.width);
+		float adjustedHeight = (adjustedWidth / targetAspectRadio + 0.5f);
+		if (adjustedHeight > static_cast<float>(raw.height))
+		{
+			adjustedHeight = static_cast<float>(raw.height);
+			adjustedWidth = (adjustedHeight * targetAspectRadio + 0.5f);
+		}
+		float vp_x = (static_cast<float>(raw.width) / 2.f) - (adjustedWidth / 2.f);
+		float vp_y = (static_cast<float>(raw.height) / 2.f) - (adjustedHeight / 2.f);
+
+		return WindowSizePosition{ adjustedWidth, adjustedHeight, vp_x, vp_y };
+	}
+	
 	void KeyCallback(GLFWwindow*, int key, int, int action, int)
 	{
 		input.SetKeyboardInput(key, action);
 	}
-	void MousePositionCallback(GLFWwindow*, double xPos, double yPos)
+	void MousePositionCallback(GLFWwindow* window, double xPos, double yPos)
 	{
+		vector2<int> size{};
+		glfwGetWindowSize(window, &size.x, &size.y);
+
+		WindowSizePosition result = GetWindowValueByResolution(WindowSizePosition{ static_cast<float>(size.x), static_cast<float>(size.y) });
+
+		vector2<int> virtualSize{ 1600, 900 };
+		
+		xPos = (xPos - result.x) * virtualSize.x / result.width;
+		yPos = (yPos - result.y) * virtualSize.y / result.height;
+
+		
 		input.SetMousePos(static_cast<float>(xPos), static_cast<float>(yPos));
 	}
 	void MouseButtonCallback(GLFWwindow*, int button, int action, int)
@@ -27,7 +69,12 @@ namespace
 	}
 	void WindowSizeCallback(GLFWwindow*, int width, int height)
 	{
-		Graphics::GL::set_display_area(width, height);
+		WindowSizePosition result = GetWindowValueByResolution(WindowSizePosition(static_cast<float>(width), static_cast<float>(height)));
+		
+		Graphics::GL::set_display_area(static_cast<int>(result.width), 
+			static_cast<int>(result.height), 
+			static_cast<int>(result.x), 
+			static_cast<int>(result.y));
 	}
 	void WindowClose(GLFWwindow* window)
 	{
@@ -149,7 +196,7 @@ bool PlatformWindow::IsMonitorVerticalSynchronizationOn() noexcept
 
 vector2<int> PlatformWindow::GetPlatformWindowSize() const noexcept
 {
-	return windowSize;
+	return vector2<int>{1600, 900};
 }
 
 void PlatformWindow::SetWindowTitle(const std::string& title) noexcept

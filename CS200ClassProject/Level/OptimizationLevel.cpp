@@ -11,10 +11,14 @@ void OptimizationLevel::Init()
 {
 	sketch.InitCamera();
 	sketch.SetBackgroundColor({ 0.f, 0.f, 1.f });
+#ifdef _DEBUG
 	sketch.SetImage("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/texture/circle.png");
+#else
+	sketch.SetImage("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/texture/circle.png");
+#endif
 }
 
-void OptimizationLevel::Update(float dt)
+void OptimizationLevel::Update(float /*dt*/)
 {
 	vector2<float> textureSize{ 150.f };
 

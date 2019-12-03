@@ -10,10 +10,14 @@ void HierarchyLevel::Init()
 {
 	sketch.InitCamera();
 	sketch.SetBackgroundColor(Graphics::Color4f{ 0.f, 1.f, 1.f });
+#ifdef _DEBUG
 	sketch.SetImage("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/texture/Suhwan.png");
+#else
+	sketch.SetImage("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/texture/Suhwan.png");
+#endif
 }
 
-void HierarchyLevel::Update(float dt)
+void HierarchyLevel::Update(float /*dt*/)
 {
 	playerPosition = input.GetMousePosition();
 	Draw();

@@ -14,10 +14,6 @@ void Demo::Init()
 	states.push_back(new OptimizationLevel(*this));
 	
 	states.at(currentStateIndex)->Init();
-	
-	std::cout << "Demo Controls:\n"
-		<< "\tRight Arrow Key - Go to the next state\n"
-		<< "\tLeft Arrow Key - Go to the previous test\n";
 }
 
 void Demo::Update(float dt)
