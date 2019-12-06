@@ -444,7 +444,7 @@ void Sketch::Instancing(int instanceCount) noexcept
 	Graphics::GL::drawInstanced(sprite, textureMaterial, instanceCount);
 }
 
-void Sketch::NoInstancing(size_t instanceCount) noexcept
+void Sketch::NoInstancing(size_t instanceCount)
 {
 	for (size_t i = 0; i < instanceCount; ++i)
 	{
@@ -498,12 +498,15 @@ void Sketch::InstancingInit()
 	{
 		for (int x = -750; x < 850; x += 150)
 		{
-			if (index >= maxSizeInstancing)
+			if (index >= max_size_instancing)
 			{
 				return;
 			}
 			translations[index] = vector2<float>(static_cast<float>(x), static_cast<float>(y));
-			colors[index] = vector3<float>{ static_cast<float>(rand() % 255)/255.f, static_cast<float>(rand() % 255)/255.f, static_cast<float>(rand() % 255)/255.f };
+			colors[index] = vector3<float>{
+				static_cast<float>(rand() % 255)/255.f,
+				static_cast<float>(rand() % 255)/255.f,
+				static_cast<float>(rand() % 255)/255.f };
 			scales[index] = vector2<float>{ static_cast<float>((rand() % 100)+50) };
 			++index;
 		}
