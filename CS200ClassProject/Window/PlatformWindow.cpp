@@ -89,7 +89,7 @@ bool PlatformWindow::CreateWindow() noexcept
 	glfwSwapInterval(true);
 
 	GLFWimage icon[1];
-	icon[0].pixels = stbi_load("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/texture/engineCustomIcon.png", &icon[0].width, &icon[0].height, 0, 4);
+	icon[0].pixels = stbi_load("../assets/texture/engineCustomIcon.png", &icon[0].width, &icon[0].height, 0, 4);
 	
 	glfwSetWindowIcon(window, 1, &icon[0]);
 	glewInit();

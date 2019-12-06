@@ -10,7 +10,6 @@ void BasicLevel::Init()
 {
 	sketch.InitCamera();
 	sketch.SetBackgroundColor(Graphics::Color4f{ 0.f, 0.2f, 1.f });
-	//sketch.SetImage("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/fonts/Malgungothic/malgungothic.fnt");
 }
 
 void BasicLevel::Clear()
@@ -23,12 +22,6 @@ void BasicLevel::Update(float dt)
 	sketch.Update(dt);
 
 	sketch.StartDrawing();
-//	sketch.DrawText(vector2<float>(0.f), vector2<float>(1.f), 
-//L"AaBbCcDdEeFf\n\nGgHhIiJjKkLl\n\tMmNnOoPpQqRrSs\n\n\nTtUuVv\n\t\tWwXxYyZz");
-	//sketch.DrawEllipses(vector2<float>(0.f), vector2<float>(100.f, 200.f));
-	// C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/texture/rect.png
-	// C:/Users/KMU_USER/Desktop/GAM200Engine/texture/testSpriteSheet.png
-	//sketch.DrawTexture(vector2<float>(-100.f), vector2<float>(100.f));
 	sketch.PushMatrix(MATRIX3::build_translation(vector2{ 200.f, 0.f }));
 	sketch.DrawEllipses(vector2<float>{-300.f, 300.f}, vector2<float>{150.f, 30.f});
 	sketch.DrawText(vector2<float>{

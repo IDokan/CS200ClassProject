@@ -41,7 +41,7 @@ void Sketch::Init() noexcept
 	sprite.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::textured_vertex_layout());
 
 	// Font & Text Init
-	if (!font.LoadFromFile("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/fonts/Malgungothic/malgungothic.fnt"))
+	if (!font.LoadFromFile("../assets/fonts/Malgungothic/malgungothic.fnt"))
 	{
 		std::cerr << "Falied to load file!" << std::endl;
 		// return false;

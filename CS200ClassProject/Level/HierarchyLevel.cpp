@@ -10,7 +10,7 @@ void HierarchyLevel::Init()
 {
 	sketch.InitCamera();
 	sketch.SetBackgroundColor(Graphics::Color4f{ 0.f, 1.f, 1.f });
-	sketch.SetImage("C:/Users/KMU_USER/Desktop/CS200ClassProject/CS200ClassProject/assets/texture/Suhwan.png");
+	sketch.SetImage("../assets/texture/Suhwan.png");
 }
 
 void HierarchyLevel::Update(float dt)
