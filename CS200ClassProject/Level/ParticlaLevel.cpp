@@ -24,9 +24,8 @@ void ParticleLevel::Update(float dt)
 	sketch.StartDrawing();
 	
 	sketch.DrawParticle(dt);
-	sketch.DrawQuads(vector2{ -160.f, -250.f }, vector2{ 160.f, -250.f }, vector2{ 160.f, -260.f }, vector2{ -160.f, -260.f }, Graphics::Color4f{ 0.4708f, 0.2359f, 0.f }, -0.75f);
-	sketch.DrawQuads(vector2{ -150.f, -250.f }, vector2{ 150.f, -250.f }, vector2{ 150.f, -450.f }, vector2{ -150.f, -450.f }, Graphics::Color4f{ 0.25f }, -0.75f);
-	sketch.DrawWeightSmokeParticle(dt, vector2{ 0.f, -250.f });
+	DrawPot();
+	sketch.DrawPoisonPotParticle(dt, vector2{ 0.f, -250.f });
 	sketch.DrawEllipses(vector2<float>{200.f, time * 80.f}, vector2<float>{1.2f});
 	sketch.DrawExplosionParticle(dt, vector2{ 200.f });
 
@@ -38,4 +37,10 @@ void ParticleLevel::Update(float dt)
 void ParticleLevel::Clear()
 {
 	isShowHelp = false;
+}
+
+void ParticleLevel::DrawPot() noexcept
+{
+	sketch.DrawQuads(vector2{ -160.f, -250.f }, vector2{ 160.f, -250.f }, vector2{ 160.f, -260.f }, vector2{ -160.f, -260.f }, Graphics::Color4f{ 0.4708f, 0.2359f, 0.f }, -0.75f);
+	sketch.DrawQuads(vector2{ -150.f, -250.f }, vector2{ 150.f, -250.f }, vector2{ 150.f, -450.f }, vector2{ -150.f, -450.f }, Graphics::Color4f{ 0.25f }, -0.75f);
 }

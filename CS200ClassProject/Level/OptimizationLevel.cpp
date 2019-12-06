@@ -1,8 +1,6 @@
 #include <Level/OptimizationLevel.hpp>
 #include "Input/InputController.h"
 
-#define numOfInstance 100
-
 OptimizationLevel::OptimizationLevel(Demo& demo)
 	: State(demo), isOptimized(true)
 {}
@@ -16,6 +14,8 @@ void OptimizationLevel::Init()
 
 void OptimizationLevel::Update(float /*dt*/)
 {
+	static constexpr int numOfInstance = 100;
+	static constexpr size_t numOfNoInstance = 100;
 	vector2<float> textureSize{ 150.f };
 
 	if(input.IsKeyTriggered(GLFW_KEY_O))
@@ -29,7 +29,7 @@ void OptimizationLevel::Update(float /*dt*/)
 	{
 		for (size_t i = 0; i < 100; i++)
 		{
-			sketch.NoInstancing(numOfInstance);
+			sketch.NoInstancing(numOfNoInstance);
 		}
 	}
 	else
@@ -40,7 +40,7 @@ void OptimizationLevel::Update(float /*dt*/)
 		}
 	}
 
-	State::HelpBox(L"This level shows instance drawing (Optimization)\n\nWhen you pressed the button 'O' which is 'O' of optimization.\n");
+	State::HelpBox(L"This level shows instance drawing (Optimization)\n\nWhen you pressed the button 'O', you can see that \n\tFPS going to decrease drastically.\n\n\nNotice!\n\tIf you are in DEBUG mode, \n\t\tyou may not return back to optimized version \n\t\tbecause FPS is too low to get an input.\n\tTry to test in RELEASE version.");
 	
 	sketch.FinishDrawing();
 }

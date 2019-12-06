@@ -27,7 +27,7 @@
 			T elements[2];
 		};
 
-	constexpr vector2() noexcept = default;
+	constexpr vector2() noexcept :x(0), y(0) {};
 	constexpr explicit vector2(T repeatedFloat) noexcept : x(repeatedFloat), y(repeatedFloat) {};
 	constexpr vector2(T x, T y) noexcept : x(x), y(y) {};
 	};

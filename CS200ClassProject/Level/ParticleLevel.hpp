@@ -12,5 +12,6 @@ public:
 	void Clear() override;
 
 private:
+	void DrawPot() noexcept;
 	float time;
 };

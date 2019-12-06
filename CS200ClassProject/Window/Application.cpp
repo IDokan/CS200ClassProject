@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Application.hpp"
 #include <Graphics/OpenGL/Screenshot.hpp>
+#include <Graphics/OpenGL/GL.hpp>
 
 Application* Application::GetApplication()
 {
@@ -59,6 +60,10 @@ void Application::BroadInputProcess()
 	else if (input.IsKeyTriggered(GLFW_KEY_3) || input.IsKeyTriggered(GLFW_KEY_KP_3))
 	{
 		demo.SetStateIndex(3);
+	}
+	else if (input.IsKeyTriggered(GLFW_KEY_4) || input.IsKeyTriggered(GLFW_KEY_KP_4))
+	{
+		demo.SetStateIndex(4);
 	}
 	if (input.IsKeyTriggered(GLFW_KEY_V))
 	{

@@ -23,7 +23,7 @@ private:
 	const size_t explosionParticleSize = 500;
 
 	// Maximum size of translation to use instancing
-	#define maxSizeInstancing 100
+	const static size_t maxSizeInstancing = 100;
 private:
 
 	// Declare particle struct
@@ -90,12 +90,12 @@ public:
 
 	// Particle Tutorial
 	void DrawParticle(float dt) noexcept;
-	void DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept;
+	void DrawPoisonPotParticle(float dt, vector2<float> position) noexcept;
 	void DrawExplosionParticle(float dt, vector2<float> position) noexcept;
 
 	// Instancing Tutorial
 	void Instancing(int instanceCount) noexcept;
-	void NoInstancing(int instanceCount) noexcept;
+	void NoInstancing(size_t instanceCount) noexcept;
 private:
 	[[nodiscard]] matrix3<float> CalculateHierarchical() noexcept;
 	

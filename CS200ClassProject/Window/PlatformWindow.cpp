@@ -140,7 +140,7 @@ bool PlatformWindow::CreateWindow() noexcept
 	
 	glfwSetWindowIcon(window, 1, &icon[0]);
 	glewInit();
-
+	
 	return true;
 }
 

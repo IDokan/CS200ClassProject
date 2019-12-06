@@ -1,19 +1,22 @@
 #include <iostream>
 #include <Level/Demo.hpp>
-#include "BasicLevel.hpp"
-#include "HierarchyLevel.hpp"
-#include "ParticleLevel.hpp"
+#include "Level/StartLevel.hpp"
+#include "Level/BasicLevel.hpp"
+#include "Level/HierarchyLevel.hpp"
+#include "Level/ParticleLevel.hpp"
 #include "Level/OptimizationLevel.hpp"
 
 void Demo::Init()
 {
-	sketch.Init();
+	states.push_back(new StartLevel(*this));
 	states.push_back(new BasicLevel(*this));
 	states.push_back(new HierarchyLevel(*this));
 	states.push_back(new ParticleLevel(*this));
 	states.push_back(new OptimizationLevel(*this));
 	
 	states.at(currentStateIndex)->Init();
+	
+	sketch.Init();
 }
 
 void Demo::Update(float dt)

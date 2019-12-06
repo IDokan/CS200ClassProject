@@ -36,7 +36,7 @@ void HierarchyLevel::Draw()
 	}
 	sketch.PopMatrix();
 
-	State::HelpBox(L"This Level shows texture and hierarchical transform.\n\nTexture:\n\tIt is a pixel art that I draw.\n\nHierarchy:\n\tThe Suwhan's position is fixed by mouse position, \n\tThe UIs such as HP bar and NickName follow him \n\tbecause they are child of him.\n");
+	State::HelpBox(L"This Level shows texture, hierarchical transform, and screen-shot.\n\nTexture:\n\tIt is a pixel art that I draw.\n\nHierarchy:\n\tThe Suwhan's position is fixed by mouse position, \n\tThe UIs such as HP bar and NickName follow him \n\tbecause they are child of him.\n\nLastly, Press F11 to take a picture.\n\tActually, Screen-shot is work everywhere.");
 	
 	sketch.FinishDrawing();
 }

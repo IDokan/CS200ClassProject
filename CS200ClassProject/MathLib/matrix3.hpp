@@ -22,7 +22,7 @@
 			};
 		};
 
-	constexpr matrix3() noexcept = default;
+	constexpr matrix3() noexcept :column0(), column1(), column2() {};
 	constexpr matrix3(vector3<T> firstColumn, vector3<T> secondColumn, vector3<T> thirdColumn) noexcept : column0(firstColumn), column1(secondColumn), column2(thirdColumn) {};
 	constexpr matrix3(T column0_row0, T column0_row1, T column0_row2, T column1_row0, T column1_row1,
 		T column1_row2, T column2_row0, T column2_row1, T column2_row2) noexcept

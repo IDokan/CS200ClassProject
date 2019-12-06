@@ -27,7 +27,7 @@
 			T elements[3];
 		};
 
-		constexpr vector3<T>() noexcept = default;
+		constexpr vector3<T>() noexcept :vector3<T>(static_cast<T>(0)){};
 		constexpr explicit vector3<T>(T repeatedFloat) noexcept : x(repeatedFloat), y(repeatedFloat), z(repeatedFloat) {};
 		constexpr vector3<T>(T x, T y, T z) : x(x), y(y), z(z) {};
 	};
@@ -76,7 +76,7 @@
 	template<typename T>
 	constexpr float distanceBetween(const vector3<T>& lhs, const vector3<T>& rhs) noexcept;
 	template<typename T>
-	constexpr float angleBetween(const vector3<T>& lhs, const vector3<T>& rhs) noexcept;
+	constexpr float angleBetween(const vector3<T>& lhs, const vector3<T>& rhs);
 
 #pragma warning(pop)
 

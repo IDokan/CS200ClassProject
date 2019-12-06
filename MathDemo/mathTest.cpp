@@ -18,6 +18,9 @@
 
 TEST_CASE("Vector2 Contructors")
 {
+	vector2<float> floatCtorNonArgumentTest{};
+	REQUIRE(floatCtorNonArgumentTest.x == 0.f);
+	REQUIRE(floatCtorNonArgumentTest.y == 0.f);
 	vector2<float> floatCtorTest{ 1.f };
 	REQUIRE(floatCtorTest.x == 1.f);
 	REQUIRE(floatCtorTest.y == 1.f);
@@ -25,12 +28,50 @@ TEST_CASE("Vector2 Contructors")
 	REQUIRE(floatCtorTest2.x == 2.f);
 	REQUIRE(floatCtorTest2.y == 3.f);
 
+	vector2<float> intCtorNonArgumentTest{};
+	REQUIRE(intCtorNonArgumentTest.x == 0);
+	REQUIRE(intCtorNonArgumentTest.y == 0);
 	vector2<int> intCtorTest{ 1 };
 	REQUIRE(intCtorTest.x == 1);
 	REQUIRE(intCtorTest.y == 1);
 	vector2<int> intCtorTest2{ 34, 5 };
 	REQUIRE(intCtorTest2.x == 34);
 	REQUIRE(intCtorTest2.y == 5);
+}
+
+TEST_CASE("Vector2 Assignment Operators")
+{
+	// Assignment Operator+
+	vector2<float> floatAdditionTest1{ 1.f };
+	floatAdditionTest1 += vector2<float>{ 1.f };
+	vector2<float> floatAdditionAnswer{ 2.f };
+	REQUIRE((floatAdditionTest1) == floatAdditionAnswer);
+
+
+
+	// Assignment Operator-
+	vector2<float> floatSubtractionTest1{ 1.f };
+	floatSubtractionTest1 -= vector2<float> { 1.f };
+	vector2<float> floatSubtractionAnswer{ 0.f };
+	REQUIRE((floatSubtractionTest1) == floatSubtractionAnswer);
+
+	vector2<float> floatSubtractionTest2{ 1.f };
+	floatSubtractionTest2 -= vector2<float> { -3.f };
+	vector2<float> floatSubtractionAnswer2{ 4.f };
+	REQUIRE((floatSubtractionTest2) == floatSubtractionAnswer2);
+
+
+	// Assignment Operator*
+	vector2<float> multipleWithFloatTest{ 2.f };
+	multipleWithFloatTest *= float{ 3.f };
+	vector2<float> multipleWithFloatAnswer{ 6.f };
+	REQUIRE((multipleWithFloatTest) == multipleWithFloatAnswer);
+
+	// Assignment Operator/
+	vector2<float> divideWithFloatTest{ 10.f };
+	divideWithFloatTest /= float { 2.f };
+	vector2<float> divideWithFloatAnswer{ 5.f };
+	REQUIRE((divideWithFloatTest) == divideWithFloatAnswer);
 }
 
 TEST_CASE("Vector2 Basic Operators")
@@ -67,6 +108,11 @@ TEST_CASE("Vector2 Basic Operators")
 	float scaler{ 3.f };
 	vector2<float> multipleWithFloatAnswer{ 6.f };
 	REQUIRE((multipleWithFloatTest * scaler) == multipleWithFloatAnswer);
+
+	vector2<float> multipleWithFloatTest2{ 3.f };
+	float scaler2{ 5.f };
+	vector2<float> multipleWithFloatAnswer2{ 15.f };
+	REQUIRE((scaler2 * multipleWithFloatTest2) == multipleWithFloatAnswer2);
 
 	// operator/
 	vector2<float> divideWithFloatTest{ 10.f };
@@ -178,6 +224,10 @@ TEST_CASE("Vector2 Advanced Functions")
 TEST_CASE("Vector3 Constructors")
 {
 	// Float Constructor
+	vector3<float> floatCtorTestNonArgument{ };
+	REQUIRE(floatCtorTestNonArgument.x == 0.f);
+	REQUIRE(floatCtorTestNonArgument.y == 0.f);
+	REQUIRE(floatCtorTestNonArgument.z == 0.f);
 	vector3<float> floatCtorTest{ 1.f };
 	REQUIRE(floatCtorTest.x == 1.f);
 	REQUIRE(floatCtorTest.y == 1.f);
@@ -205,6 +255,44 @@ TEST_CASE("Vector3 Constructors")
 	REQUIRE(intCtorTest2.x == 2);
 	REQUIRE(intCtorTest2.y == 3);
 	REQUIRE(intCtorTest2.z == 4);
+}
+
+TEST_CASE("Vector3 Assignment Operations")
+{
+	// Assignment Operator+
+	vector3<float> floatAdditionTest1{ 1.f };
+	floatAdditionTest1 += vector3<float>{ 1.f };
+	vector3<float> floatAdditionAnswer{ 2.f };
+	REQUIRE((floatAdditionTest1) == floatAdditionAnswer);
+
+	floatAdditionTest1 += vector3<float> { -1.f };
+	vector3<float> floatAdditionAnswer2{ 1.f };
+	REQUIRE((floatAdditionTest1) == floatAdditionAnswer2);
+	
+	// Assignment Operator-
+	vector3<float> floatSubtractionTest1{ 1.f };
+	floatSubtractionTest1 -= vector3<float> { 1.f };
+	vector3<float> floatSubtractionAnswer{ 0.f };
+	REQUIRE((floatSubtractionTest1) == floatSubtractionAnswer);
+
+	vector3<float> floatSubtractionTest2{ 1.f };
+	floatSubtractionTest2 -= vector3<float> { -3.f };
+	vector3<float> floatSubtractionAnswer2{ 4.f };
+	REQUIRE((floatSubtractionTest2) == floatSubtractionAnswer2);
+	
+	// Assignment Operator*
+	vector3<float> floatMultiplicationTest1{ 2.f };
+	floatMultiplicationTest1 *= float {5.f };
+	vector3<float> floatMultiplicationAnswer{ 10.f };
+	REQUIRE((floatMultiplicationTest1) == floatMultiplicationAnswer);
+
+
+	// Assignment operator/
+	vector3<float> divideWithFloatTest{ 10.f };
+	divideWithFloatTest /= float { 2.f };
+	vector3<float> divideWithFloatAnswer{ 5.f };
+	REQUIRE((divideWithFloatTest) == divideWithFloatAnswer);
+
 }
 
 TEST_CASE("Vector3 Basic Operations")

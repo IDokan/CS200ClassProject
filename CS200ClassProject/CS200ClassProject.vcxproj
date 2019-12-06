@@ -44,6 +44,7 @@
     <ClCompile Include="Level\HierarchyLevel.cpp" />
     <ClCompile Include="Level\OptimizationLevel.cpp" />
     <ClCompile Include="Level\ParticlaLevel.cpp" />
+    <ClCompile Include="Level\StartLevel.cpp" />
     <ClCompile Include="Window\Application.cpp" />
     <ClCompile Include="Window\Engine.cpp" />
     <ClCompile Include="Window\PlatformWindow.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="Level\HierarchyLevel.hpp" />
     <ClInclude Include="Level\OptimizationLevel.hpp" />
     <ClInclude Include="Level\ParticleLevel.hpp" />
+    <ClInclude Include="Level\StartLevel.hpp" />
     <ClInclude Include="Level\State.hpp" />
     <ClInclude Include="Timer\Timer.hpp" />
     <ClInclude Include="Window\Application.hpp" />

@@ -46,6 +46,10 @@ void Sketch::Init() noexcept
 	mesh.AddTextureCoordinate(vector2{ 1.f, });
 	sprite.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::textured_vertex_layout());
 
+
+	Sketch::SetImage("../assets/texture/Suhwan.png");
+	Sketch::SetImage("../assets/texture/circle.png");
+
 	// Font & Text Init
 	if (!font.LoadFromFile("../assets/fonts/Malgungothic/malgungothic.fnt"))
 	{
@@ -56,7 +60,7 @@ void Sketch::Init() noexcept
 	textMaterial.shader = &Graphics::SHADER::textured();
 	textMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = Graphics::Color4f{ 1.f };
 	textMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = 0.f;
-
+	
 	ParticleInit();
 	InstancingInit();
 }
@@ -283,7 +287,7 @@ void Sketch::DrawParticle(float dt) noexcept
 	}
 }
 
-void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
+void Sketch::DrawPoisonPotParticle(float dt, vector2<float> position) noexcept
 {
 	Object obj;
 	const unsigned numOfNewParticlePerFrame = 1;
@@ -348,7 +352,7 @@ void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
 void Sketch::DrawExplosionParticle(float dt, vector2<float> position) noexcept
 {
 	Object obj;
-	const unsigned numOfNewParticlePerFrame = 500;
+	constexpr static unsigned numOfNewParticlePerFrame = 500;
 
 	// Revive dead particle into new Alive particle
 	for (unsigned int i = 0; i < numOfNewParticlePerFrame; ++i)
@@ -366,6 +370,7 @@ void Sketch::DrawExplosionParticle(float dt, vector2<float> position) noexcept
 		const float xRandomVelocity = radius * cos(radian);
 		float yRandomVelocity = radius * sin(radian);
 
+		// Half of their y-axis velocity is flipped
 		if (i % 2)
 		{
 			yRandomVelocity = -yRandomVelocity;
@@ -395,8 +400,10 @@ void Sketch::DrawExplosionParticle(float dt, vector2<float> position) noexcept
 				p.velocity.y = 0.f;
 			}
 
+			static constexpr float MAXIMUM_COLOR_VALUE = 1.f;
+			static constexpr float RATIO = 200.f;
 			const float t = magnitude(p.position - position);
-			p.color.green = (1 - (t / 200));
+			p.color.green = (MAXIMUM_COLOR_VALUE - (t / RATIO));
 			
 			p.color.alpha -= dt * 0.25f;
 			if (p.color.alpha <= 0.f)
@@ -437,7 +444,7 @@ void Sketch::Instancing(int instanceCount) noexcept
 	Graphics::GL::drawInstanced(sprite, textureMaterial, instanceCount);
 }
 
-void Sketch::NoInstancing(int instanceCount) noexcept
+void Sketch::NoInstancing(size_t instanceCount) noexcept
 {
 	for (size_t i = 0; i < instanceCount; ++i)
 	{
@@ -560,6 +567,6 @@ void Sketch::SetImage(const std::filesystem::path& filepath) noexcept
 	}
 	else
 	{
-		std::cout << "fail to load image\n";
+		std::cerr << "fail to load image\n";
 	}
 }

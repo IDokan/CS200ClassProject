@@ -109,6 +109,9 @@
     <ClCompile Include="Level\OptimizationLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="Level\StartLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window\Application.hpp">
@@ -208,6 +211,9 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="Level\OptimizationLevel.hpp">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Level\StartLevel.hpp">
       <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>

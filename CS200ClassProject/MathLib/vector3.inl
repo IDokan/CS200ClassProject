@@ -106,7 +106,7 @@
 	}
 
 	template <typename T>
-	constexpr float angleBetween(const vector3<T>& lhs, const vector3<T>& rhs) noexcept
+	constexpr float angleBetween(const vector3<T>& lhs, const vector3<T>& rhs)
 	{
 		const float magnitudeOfLhs = magnitude(lhs);
 		if (magnitudeOfLhs == 0)
