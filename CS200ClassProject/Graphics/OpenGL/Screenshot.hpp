@@ -1,5 +1,5 @@
 /*
- * Rudy Castan
+ * sinil.gang
  * Graphics Library
  * CS230
  */

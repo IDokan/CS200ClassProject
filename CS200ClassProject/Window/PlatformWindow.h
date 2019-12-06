@@ -1,3 +1,15 @@
+/******************************************************************************
+Copyright (C) 2019 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+File Name:   PlatformWindow.h
+Author
+	- Sinil.Kang rtd99062@gmail.com
+Creation Date: 12.07.2019
+
+History file the level that show a bunch of drawing function by others directly.
+	Yes, sometimes it worked like it.
+******************************************************************************/
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>

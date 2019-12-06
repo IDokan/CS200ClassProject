@@ -1,3 +1,15 @@
+/******************************************************************************
+Copyright (C) 2019 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+File Name:   mathTest.cpp
+Author
+	- Sinil.Kang rtd99062@gmail.com
+Creation Date: 12.07.2019
+
+ It is unit test code with Catch2 to test every function in the my math lib.
+******************************************************************************/
+
 //		TEST_CASE(/* String */)
 //		{
 //			REQUIRE(/* Statement that I want to test */);

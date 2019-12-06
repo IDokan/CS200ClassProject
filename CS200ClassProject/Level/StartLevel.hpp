@@ -7,7 +7,7 @@ Author
 	- Sinil.Kang rtd99062@gmail.com
 Creation Date: 12.07.2019
 
-	Header file for Start Initial Level
+	Header file for start level that teach client to use help box
 ******************************************************************************/
 #pragma once
 #include <Level/State.hpp>

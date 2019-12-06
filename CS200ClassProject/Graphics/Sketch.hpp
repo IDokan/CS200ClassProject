@@ -1,3 +1,14 @@
+/******************************************************************************
+Copyright (C) 2019 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+File Name:   Sketch.hpp
+Author
+	- Sinil.Kang rtd99062@gmail.com
+Creation Date: 12.07.2019
+
+	Header file for Sketch file that do all thing related with drawing stuff
+******************************************************************************/
 #pragma once
 #include <stack>
 #include "Graphics/OpenGL/Mesh.hpp"

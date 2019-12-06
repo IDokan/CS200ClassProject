@@ -1,3 +1,14 @@
+/******************************************************************************
+Copyright (C) 2019 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+File Name:   Demo.cpp
+Author
+	- Sinil.Kang rtd99062@gmail.com
+Creation Date: 12.07.2019
+
+	Source file Demo file
+******************************************************************************/
 #include <iostream>
 #include <Level/Demo.hpp>
 #include "Level/StartLevel.hpp"
