@@ -13,7 +13,7 @@ void HierarchyLevel::Init()
 	sketch.SetImage("../assets/texture/Suhwan.png");
 }
 
-void HierarchyLevel::Update(float dt)
+void HierarchyLevel::Update(float /*dt*/)
 {
 	playerPosition = input.GetMousePosition();
 	Draw();

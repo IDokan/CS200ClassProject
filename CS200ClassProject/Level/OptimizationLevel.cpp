@@ -14,7 +14,7 @@ void OptimizationLevel::Init()
 	sketch.SetImage("../assets/texture/circle.png");
 }
 
-void OptimizationLevel::Update(float dt)
+void OptimizationLevel::Update(float /*dt*/)
 {
 	vector2<float> textureSize{ 150.f };
 

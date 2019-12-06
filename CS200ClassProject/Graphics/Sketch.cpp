@@ -3,8 +3,14 @@
 #include "Graphics/OpenGL/Mesh.hpp"
 #include "Graphics/OpenGL/StockShaders.hpp"
 #include "Graphics/OpenGL/Color4f.hpp"
+#include "Window/Application.hpp"
 #include <iostream>
 
+
+Sketch::Sketch()
+	:translations{ vector2<float>{0.f} }, colors{vector3<float>{0.f}}, scales{ vector2<float>{0.f} }
+{
+}
 
 void Sketch::Init() noexcept
 {
@@ -52,7 +58,6 @@ void Sketch::Init() noexcept
 	textMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = 0.f;
 
 	ParticleInit();
-
 	InstancingInit();
 }
 
@@ -70,9 +75,11 @@ void Sketch::InitCamera()
 	cameraManager.Init();
 }
 
-void Sketch::StartDrawing() const noexcept
+void Sketch::StartDrawing() noexcept
 {
 	Graphics::GL::begin_drawing();
+	vector2<int> windowSize = Application::GetApplication()->GetWindowSize();
+	cameraManager.SetViewSize(windowSize.x, windowSize.y);
 }
 
 void Sketch::FinishDrawing() const noexcept
@@ -149,13 +156,13 @@ void Sketch::DrawQuads(float x1, float y1, float x2, float y2, float x3, float y
 
 void Sketch::DrawTriangles(vector2<float> position1, vector2<float> position2, vector2<float> position3) noexcept
 {
-	Graphics::Mesh mesh;
-	mesh.AddPoint(position1);
-	mesh.AddPoint(position2);
-	mesh.AddPoint(position3);
-	mesh.SetPointListType(Graphics::PointListPattern::Triangles);
+	Graphics::Mesh mesh_;
+	mesh_.AddPoint(position1);
+	mesh_.AddPoint(position2);
+	mesh_.AddPoint(position3);
+	mesh_.SetPointListType(Graphics::PointListPattern::Triangles);
 
-	triangle.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::solid_color_vertex_layout());
+	triangle.InitializeWithMeshAndLayout(mesh_, Graphics::SHADER::solid_color_vertex_layout());
 
 	Draw(&Graphics::SHADER::solid_color(), triangle);
 }
@@ -167,12 +174,12 @@ void Sketch::DrawTriangles(float x1, float y1, float x2, float y2, float x3, flo
 
 void Sketch::DrawLines(vector2<float> position1, vector2<float> position2) noexcept
 {
-	Graphics::Mesh mesh;
-	mesh.AddPoint(position1);
-	mesh.AddPoint(position2);
-	mesh.SetPointListType(Graphics::PointListPattern::Lines);
+	Graphics::Mesh mesh_;
+	mesh_.AddPoint(position1);
+	mesh_.AddPoint(position2);
+	mesh_.SetPointListType(Graphics::PointListPattern::Lines);
 
-	line.InitializeWithMeshAndLayout(mesh, Graphics::SHADER::solid_color_vertex_layout());
+	line.InitializeWithMeshAndLayout(mesh_, Graphics::SHADER::solid_color_vertex_layout());
 
 	Draw(&Graphics::SHADER::solid_color(), line);
 }
@@ -262,13 +269,13 @@ void Sketch::DrawParticle(float dt) noexcept
 		}
 	}
 	std::sort(exampleParticles.begin(), exampleParticles.end(), [](const Particle& a, const Particle& b) {return a.color.alpha > b.color.alpha; });
+	textureMaterial.shader = &Graphics::SHADER::particle();
+	textureMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -0.5f;
 	for (unsigned int i = 0; i < particleSize; ++i)
 	{
 		Particle& particle = exampleParticles.at(i);
 		if (particle.life > 0.1f)
 		{
-			textureMaterial.shader = &Graphics::SHADER::particle();
-			textureMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -0.5f;
 			textureMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
 			textureMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 0.5f });
 			Graphics::GL::draw(sprite, textureMaterial);
@@ -324,16 +331,16 @@ void Sketch::DrawWeightSmokeParticle(float dt, vector2<float> position) noexcept
 			return particle1.color.alpha > particle2.color.alpha;
 		});
 
-	smokeParticleMaterial.shader = &Graphics::SHADER::particle();
-	smokeParticleMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -0.5f;
+	textureMaterial.shader = &Graphics::SHADER::particle();
+	textureMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -0.5f;
 	for (size_t i = 0; i < smokeParticleSize; ++i)
 	{
 		Particle& particle = smokeParticle.at(i);
 		if (particle.life > 0.1f)
 		{
-			smokeParticleMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
-			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 1.25f });
-			Graphics::GL::draw(sprite, smokeParticleMaterial);
+			textureMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
+			textureMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 1.25f });
+			Graphics::GL::draw(sprite, textureMaterial);
 		}
 	}
 }
@@ -354,7 +361,7 @@ void Sketch::DrawExplosionParticle(float dt, vector2<float> position) noexcept
 		const float xRandomPosition = position.x;
 		const float yPosition = position.y;
 		const float radius = static_cast<float>(rand() % 1000);
-		const float radian = static_cast<float>(rand() % 314000) * 0.0001;
+		const float radian = static_cast<float>(rand() % 314000) * 0.0001f;
 		
 		const float xRandomVelocity = radius * cos(radian);
 		float yRandomVelocity = radius * sin(radian);
@@ -404,16 +411,16 @@ void Sketch::DrawExplosionParticle(float dt, vector2<float> position) noexcept
 			return particle1.color.alpha > particle2.color.alpha;
 		});
 
-	smokeParticleMaterial.shader = &Graphics::SHADER::particle();
-	smokeParticleMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -0.5f;
+	textureMaterial.shader = &Graphics::SHADER::particle();
+	textureMaterial.floatUniforms[Graphics::SHADER::Uniform_Depth] = -0.5f;
 	for (size_t i = 0; i < smokeParticleSize; ++i)
 	{
 		Particle& particle = explosionParticle.at(i);
 		if (particle.life > 0.1f)
 		{
-			smokeParticleMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
-			smokeParticleMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 0.5f });
-			Graphics::GL::draw(sprite, smokeParticleMaterial);
+			textureMaterial.color4fUniforms[Graphics::SHADER::Uniform_Color] = particle.color;
+			textureMaterial.matrix3Uniforms[Graphics::SHADER::Uniform_ToNDC] = cameraManager.GetWorldToNDCTransform() * CalculateHierarchical() * MATRIX3::build_translation(particle.position) * MATRIX3::build_scale(vector2{ 0.5f });
+			Graphics::GL::draw(sprite, textureMaterial);
 		}
 	}
 }
@@ -554,19 +561,5 @@ void Sketch::SetImage(const std::filesystem::path& filepath) noexcept
 	else
 	{
 		std::cout << "fail to load image\n";
-	}
-}
-
-void Sketch::SetSmokeParticleAsset(const std::filesystem::path& filepath) noexcept
-{
-	if (texture.LoadFromPNG(filepath))
-	{
-		const Graphics::texture_uniform container{ &texture, 1 };
-		smokeParticleMaterial.textureUniforms[Graphics::SHADER::Uniform_Texture] = container;
-		smokeParticleMaterial.vector2Uniforms[Graphics::SHADER::Uniform_ImageSize] = vector2{ float(texture.GetWidth()), float(texture.GetHeight()) };
-	}
-	else
-	{
-		std::cout << "fail to load image for particle 1\n";
 	}
 }

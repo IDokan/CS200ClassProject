@@ -24,7 +24,7 @@ private:
 
 	// Maximum size of translation to use instancing
 	#define maxSizeInstancing 100
-public:
+private:
 
 	// Declare particle struct
 	struct Particle
@@ -47,7 +47,7 @@ public:
 	};
 	
 public:
-	Sketch() {}
+	Sketch();
 	void Init() noexcept;
 	void Update(float dt) noexcept;
 	void Clear() noexcept;
@@ -56,13 +56,12 @@ public:
 	
 	// These two functions should be called
 	// before and after draw function in each frame
-	void StartDrawing() const noexcept;
+	void StartDrawing() noexcept;
 	void FinishDrawing() const noexcept;
 
 	// Setter functions
 	void SetBackgroundColor(Graphics::Color4f color);
 	void SetImage(const std::filesystem::path& filepath) noexcept;
-	void SetSmokeParticleAsset(const std::filesystem::path& filepath) noexcept;
 	
 	// Draw Shapes Functions
 	void DrawEllipses(vector2<float> position, vector2<float> size) noexcept;
@@ -138,7 +137,6 @@ private:
 	std::vector<Particle> exampleParticles;
 
 	std::vector<Particle> smokeParticle;
-	Graphics::material smokeParticleMaterial;
 
 	std::vector<Particle> explosionParticle;
 
