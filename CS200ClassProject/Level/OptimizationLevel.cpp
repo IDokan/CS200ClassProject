@@ -25,8 +25,9 @@ void OptimizationLevel::Init()
 
 void OptimizationLevel::Update(float /*dt*/)
 {
-	static constexpr int numOfInstance = 100;
-	static constexpr size_t numOfNoInstance = 100;
+	constexpr int numOfInstance = 100;
+	constexpr size_t numOfNoInstance = 100;
+	constexpr size_t ITERATION = 50;
 	vector2<float> textureSize{ 150.f };
 
 	if(input.IsKeyTriggered(GLFW_KEY_O))
@@ -38,14 +39,14 @@ void OptimizationLevel::Update(float /*dt*/)
 	sketch.StartDrawing();
 	if (!isOptimized)
 	{
-		for (size_t i = 0; i < 100; i++)
+		for (size_t i = 0; i < ITERATION; ++i)
 		{
 			sketch.NoInstancing(numOfNoInstance);
 		}
 	}
 	else
 	{
-		for (size_t i = 0; i < 100; i++)
+		for (size_t i = 0; i < ITERATION; ++i)
 		{
 			sketch.Instancing(numOfInstance);
 		}

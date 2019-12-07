@@ -445,8 +445,23 @@ TEST_CASE("Vector3 Advanced Functions")
 	REQUIRE(angle == MATH::PI / 2);
 }
 
-TEST_CASE("Matrix Constructors")
+TEST_CASE("Matrix3 Constructors")
 {
+	matrix3<float> ctor_test0{};
+
+	REQUIRE(ctor_test0.column0.x == 0.f);
+	REQUIRE(ctor_test0.column0.y == 0.f);
+	REQUIRE(ctor_test0.column0.z == 0.f);
+								   							 
+	REQUIRE(ctor_test0.column1.x == 0.f);
+	REQUIRE(ctor_test0.column1.y == 0.f);
+	REQUIRE(ctor_test0.column1.z == 0.f);
+								   							 
+	REQUIRE(ctor_test0.column2.x == 0.f);
+	REQUIRE(ctor_test0.column2.y == 0.f);
+	REQUIRE(ctor_test0.column2.z == 0.f);
+	
+	
 	vector3<float> first = { 1.f,2.f,3.f };
 	vector3<float> second = { 4.f,5.f,6.f };
 	vector3<float> third = { 7.f,8.f,9.f };
@@ -553,75 +568,61 @@ TEST_CASE("Matrix3 Basic Operations")
 	REQUIRE(my_multiple_result2 == multiple_result2);
 }
 
-TEST_CASE("matrix3 transpose")
+TEST_CASE("Matrix3 Advanced Function")
 {
-	matrix3<float> mat_test(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f);
-	matrix3<float> result(1.f, 4.f, 7.f, 2.f, 5.f, 8.f, 3.f, 6.f, 9.f);
-	mat_test = MATRIX3::transpose(mat_test);
+	// transpose
+	matrix3<float> transpose_test(1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f);
+	matrix3<float> transpose_result(1.f, 4.f, 7.f, 2.f, 5.f, 8.f, 3.f, 6.f, 9.f);
+	transpose_test = MATRIX3::transpose(transpose_test);
 
-	REQUIRE(mat_test == result);
-}
+	REQUIRE(transpose_test == transpose_result);
 
-TEST_CASE("matrix3 rotation")
-{
-	matrix3<float> test = MATRIX3::build_rotation(30.f);;
+	// rotation
+	matrix3<float> rotation_test = MATRIX3::build_rotation(30.f);;
 
-	matrix3<float> result(cos(30.f), sin(30.f), 0.f, -sin(30.f), cos(30.f), 0.f, 0.f, 0.f, 1.f);
+	matrix3<float> rotation_result(cos(30.f), sin(30.f), 0.f, -sin(30.f), cos(30.f), 0.f, 0.f, 0.f, 1.f);
 
-	REQUIRE(test == result);
-}
+	REQUIRE(rotation_test == rotation_result);
 
-TEST_CASE("matrix3 identity")
-{
-	matrix3<float> test = MATRIX3::build_identity<float>();
+	// identity
+	matrix3<float> identity_test = MATRIX3::build_identity<float>();
 
-	matrix3<float> result(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 1.f);
+	matrix3<float> identity_result(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 1.f);
 
-	REQUIRE(test == result);
-}
+	REQUIRE(identity_test == identity_result);
 
-TEST_CASE("matrix3 scale_2float")
-{
-	matrix3<float> test = MATRIX3::build_scale<float>(10.f, 20.f);
+	// scale(float, float)
+	matrix3<float> scale_test_1 = MATRIX3::build_scale<float>(10.f, 20.f);
 
-	matrix3<float> result(10.f, 0.f, 0.f, 0.f, 20.f, 0.f, 0.f, 0.f, 1.f);
+	matrix3<float> scale_result_1(10.f, 0.f, 0.f, 0.f, 20.f, 0.f, 0.f, 0.f, 1.f);
 
-	REQUIRE(test == result);
-}
+	REQUIRE(scale_test_1 == scale_result_1);
 
-TEST_CASE("matrix3 scale_1float")
-{
-	matrix3<float> test = MATRIX3::build_scale<float>(10.f);
+	// scale(float)
+	matrix3<float> scale_test_2 = MATRIX3::build_scale<float>(10.f);
 
-	matrix3<float> result(10.f, 0.f, 0.f, 0.f, 10.f, 0.f, 0.f, 0.f, 1.f);
+	matrix3<float> scale_result_2(10.f, 0.f, 0.f, 0.f, 10.f, 0.f, 0.f, 0.f, 1.f);
 
-	REQUIRE(test == result);
-}
+	REQUIRE(scale_test_2 == scale_result_2);
 
-TEST_CASE("matrix3 scale_vector")
-{
-	matrix3<float> test = MATRIX3::build_scale<float>({ 10.f,20.f });
+	// scale(vector2)
+	matrix3<float> scale_test_3 = MATRIX3::build_scale<float>({ 10.f,20.f });
 
-	matrix3<float> result(10.f, 0.f, 0.f, 0.f, 20.f, 0.f, 0.f, 0.f, 1.f);
+	matrix3<float> scale_result_3 (10.f, 0.f, 0.f, 0.f, 20.f, 0.f, 0.f, 0.f, 1.f);
 
-	REQUIRE(test == result);
-}
+	REQUIRE(scale_test_3 == scale_result_3);
 
-TEST_CASE("matrix3 translation_2float")
-{
-	matrix3<float> test = MATRIX3::build_translation<float>(10.f, 25.f);
+	// translation(float, float)
+	matrix3<float> translation_test = MATRIX3::build_translation<float>(10.f, 25.f);
 
-	matrix3<float> result(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 10.f, 25.f, 1.f);
+	matrix3<float> translation_result(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 10.f, 25.f, 1.f);
 
-	REQUIRE(test == result);
-}
+	REQUIRE(translation_test == translation_result);
 
+	// translation(vector2)
+	matrix3<float> translation_test_1 = MATRIX3::build_translation<float>({ 10.f, 25.f });
 
-TEST_CASE("matrix3 translation_vector")
-{
-	matrix3<float> test = MATRIX3::build_translation<float>({ 10.f, 25.f });
+	matrix3<float> translation_result_1(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 10.f, 25.f, 1.f);
 
-	matrix3<float> result(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 10.f, 25.f, 1.f);
-
-	REQUIRE(test == result);
+	REQUIRE(translation_test_1 == translation_result_1);
 }

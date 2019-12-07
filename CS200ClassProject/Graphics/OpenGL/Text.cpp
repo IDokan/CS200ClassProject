@@ -19,7 +19,8 @@ namespace Graphics
     {
         BuildNewMeshesIfNeeded();
         std::vector<std::pair<const Vertices*, const Texture*>> result;
-        for (int i = 0; i < vertices.size(); ++i)
+		const int vertices_size = static_cast<int>(vertices.size());
+        for (int i = 0; i < vertices_size; ++i)
         {
             if (vertices.at(i).GetVerticesCount() != 0)
             {

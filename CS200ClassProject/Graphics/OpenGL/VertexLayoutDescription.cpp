@@ -58,8 +58,9 @@ namespace Graphics
     void Graphics::VertexLayoutDescription::SendVertexDescriptionToOpenGL() const noexcept
     {
         GLintptr offset = 0;
-        
-        for (int count = 0; count < fields.size(); ++count)
+
+		const int fields_size = static_cast<int>(fields.size());
+        for (int count = 0; count < fields_size; ++count)
         {
             glCheck(glEnableVertexAttribArray(count));
 
