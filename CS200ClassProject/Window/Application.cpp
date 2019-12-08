@@ -37,13 +37,14 @@ void Application::Init()
 void Application::Update(float dt)
 {
 	input.TriggeredReset();
-	CalculateFPS(dt);
 	window.PollEvent();
 	
 	if (isPaused)
 	{
 		return;
 	}
+	CalculateFPS(dt);
+	
 	BroadInputProcess();
 
 	demo.Update(dt);

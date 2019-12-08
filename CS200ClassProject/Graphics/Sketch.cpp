@@ -504,12 +504,12 @@ void Sketch::RespwanParticle(Particle& particle, Object& object, vector2<float> 
 void Sketch::InstancingInit()
 {
 	Graphics::Color4f color{ 0.f };
-	int index = 0;
-	for (int y = -450; y < 90000; y+=120)
+	size_t index = 0;
+	for (int y = -450; y < 900000000; y+=120)
 	{
 		for (int x = -750; x < 850; x += 150)
 		{
-			if (index >= max_size_instancing)
+			if (index >= MAX_SIZE_INSTANCING)
 			{
 				return;
 			}

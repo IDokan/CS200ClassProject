@@ -34,7 +34,7 @@ public:
 	const size_t explosionParticleSize = 500;
 
 	// Maximum size of translation to use instancing
-	const static size_t max_size_instancing = 100;
+	const static size_t MAX_SIZE_INSTANCING = 10000;
 private:
 
 	// Declare particle struct
@@ -152,8 +152,8 @@ private:
 	std::vector<Particle> explosionParticle;
 
 	// Instancing translations
-	vector2<float> translations[max_size_instancing];
-	vector3<float> colors[max_size_instancing];
-	vector2<float> scales[max_size_instancing];
+	vector2<float> translations[MAX_SIZE_INSTANCING];
+	vector3<float> colors[MAX_SIZE_INSTANCING];
+	vector2<float> scales[MAX_SIZE_INSTANCING];
 };
 

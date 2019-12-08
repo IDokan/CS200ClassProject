@@ -154,12 +154,12 @@ void Graphics::Shader::SendUniformVariable(const std::string& variable_name, vec
 
 void Graphics::Shader::SendUniformVariable(const std::string& variable_name, vector2<float>* number) noexcept
 {
-	glCheck(glUniform2fv(GetUniformLocation(variable_name), static_cast<int>(Sketch::max_size_instancing), &number->elements[0]));
+	glCheck(glUniform2fv(GetUniformLocation(variable_name), static_cast<int>(Sketch::MAX_SIZE_INSTANCING), &number->elements[0]));
 }
 
 void Graphics::Shader::SendUniformVariable(const std::string& variable_name, vector3<float>* number) noexcept
 {
-	glCheck(glUniform3fv(GetUniformLocation(variable_name), static_cast<int>(Sketch::max_size_instancing), &number->elements[0]));
+	glCheck(glUniform3fv(GetUniformLocation(variable_name), static_cast<int>(Sketch::MAX_SIZE_INSTANCING), &number->elements[0]));
 }
 
 void Graphics::Shader::SendUniformVariable(const std::string& variable_name, Color4f color) noexcept

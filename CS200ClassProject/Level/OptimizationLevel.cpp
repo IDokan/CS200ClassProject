@@ -25,35 +25,25 @@ void OptimizationLevel::Init()
 
 void OptimizationLevel::Update(float /*dt*/)
 {
-	constexpr int numOfInstance = 100;
-	constexpr size_t numOfNoInstance = 100;
-	constexpr size_t ITERATION = 50;
-	vector2<float> textureSize{ 150.f };
 
-	if(input.IsKeyTriggered(GLFW_KEY_O))
+	if (input.IsKeyTriggered(GLFW_KEY_O))
 	{
 		isOptimized = !isOptimized;
 	}
-	
+
 	Graphics::Color4f color{ 0.f };
 	sketch.StartDrawing();
 	if (!isOptimized)
 	{
-		for (size_t i = 0; i < ITERATION; ++i)
-		{
-			sketch.NoInstancing(numOfNoInstance);
-		}
+		sketch.NoInstancing(Sketch::MAX_SIZE_INSTANCING);
 	}
 	else
 	{
-		for (size_t i = 0; i < ITERATION; ++i)
-		{
-			sketch.Instancing(numOfInstance);
-		}
+		sketch.Instancing(Sketch::MAX_SIZE_INSTANCING);
 	}
 
 	State::HelpBox(L"This level shows instance drawing (Optimization)\n\nWhen you pressed the button 'O', you can see that \n\tFPS going to decrease drastically.\n\n\nNotice!\n\tIf you are in DEBUG mode, \n\t\tyou may not return back to optimized version \n\t\tbecause FPS is too low to get an input.\n\tTry to test in RELEASE version.");
-	
+
 	sketch.FinishDrawing();
 }
 
